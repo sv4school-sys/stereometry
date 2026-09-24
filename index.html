@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d47a1">
+<title>Введение в стереометрию — 10 класс | СШ №4 г. Светлогорска</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #e8f4f8 0%, #d0e8f2 100%);
+    min-height: 100vh; color: #2c3e50; padding-bottom: 40px; overflow-x: hidden;
+  }
+
+  /* ===== ШАПКА ===== */
+  header {
+    background: linear-gradient(135deg, #1565c0 0%, #0d47a1 60%, #1a237e 100%);
+    color: #fff; padding: 22px 16px 20px;
+    padding-top: calc(22px + env(safe-area-inset-top));
+    box-shadow: 0 6px 22px rgba(13, 71, 161, 0.35);
+    position: relative; overflow: hidden;
+  }
+  header::after {
+    content: ""; position: absolute; right: -60px; top: -60px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%);
+    border-radius: 50%;
+  }
+  .school {
+    display: flex; align-items: center; gap: 12px;
+    justify-content: center; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+  .emblem {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, #ffd54f, #ffb300);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    border: 3px solid rgba(255,255,255,0.55);
+    flex-shrink: 0;
+  }
+  .school-name { text-align: center; min-width: 0; }
+  .school-name .main { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.3px; line-height: 1.25; }
+  .school-name .sub { font-size: 0.78rem; opacity: 0.9; margin-top: 2px; line-height: 1.25; }
+  h1 {
+    text-align: center;
+    font-size: clamp(1.15rem, 4.8vw, 1.85rem);
+    margin-top: 14px; font-weight: 700; line-height: 1.25;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    position: relative; z-index: 1;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: clamp(0.8rem, 3vw, 0.95rem);
+    opacity: 0.9; margin-top: 6px;
+    position: relative; z-index: 1;
+  }
+
+  /* ===== ГЛАВНАЯ НАВИГАЦИЯ ===== */
+  nav.main-nav {
+    display: flex; justify-content: center; gap: 6px;
+    padding: 12px 10px 14px; flex-wrap: wrap;
+    max-width: 1000px; margin: 0 auto;
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(232, 244, 248, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(21,101,192,0.08);
+  }
+  .main-tab {
+    flex: 1 1 0; max-width: 260px;
+    padding: 11px 8px;
+    border: 2px solid #1565c0; background: #fff;
+    color: #1565c0; border-radius: 30px;
+    font-size: clamp(0.72rem, 2.8vw, 0.92rem);
+    font-weight: 600; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+    user-select: none; min-height: 46px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; line-height: 1.2;
+  }
+  .main-tab:active { transform: scale(0.97); }
+  .main-tab.active {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: #fff; border-color: #0d47a1;
+    box-shadow: 0 6px 18px rgba(21,101,192,0.4);
+  }
+  .main-tab.tab-axioms { border-color: #7e57c2; color: #7e57c2; }
+  .main-tab.tab-axioms.active {
+    background: linear-gradient(135deg, #7e57c2, #4527a0);
+    border-color: #4527a0;
+    box-shadow: 0 6px 18px rgba(126,87,194,0.4);
+  }
+  .main-tab.tab-final { border-color: #43a047; color: #43a047; }
+  .main-tab.tab-final.active {
+    background: linear-gradient(135deg, #43a047, #1b5e20);
+    border-color: #1b5e20;
+    box-shadow: 0 6px 18px rgba(67,160,71,0.4);
+  }
+  @media (hover: hover) {
+    .main-tab:hover { transform: translateY(-2px); }
+  }
+
+  /* ===== ПОДВКЛАДКИ ===== */
+  .subnav {
+    display: flex; justify-content: center; gap: 6px;
+    padding: 12px 10px 6px; flex-wrap: wrap;
+    max-width: 1000px; margin: 0 auto;
+  }
+  .sub-tab {
+    flex: 1 1 0; max-width: 180px;
+    padding: 9px 10px;
+    border: 2px solid #cfd8dc; background: #fff;
+    color: #455a64; border-radius: 22px;
+    font-size: clamp(0.78rem, 3vw, 0.9rem);
+    font-weight: 600; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+    min-height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 5px;
+  }
+  .sub-tab.active {
+    background: #e3f2fd; border-color: #1565c0;
+    color: #0d47a1;
+  }
+  .sub-tab:active { transform: scale(0.97); }
+
+  /* ===== КОНТЕЙНЕР ===== */
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 14px; }
+  .section { display: none; animation: fade 0.35s ease; }
+  .section.active { display: block; }
+  .subsection { display: none; animation: fade 0.3s ease; }
+  .subsection.active { display: block; }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== ПЛАШКА ТЕМЫ ===== */
+  .topic-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .badge-blue { background: #e3f2fd; color: #0d47a1; }
+  .badge-purple { background: #ede7f6; color: #4527a0; }
+  .badge-green { background: #e8f5e9; color: #1b5e20; }
+
+  /* ===== КАРТОЧКИ ===== */
+  .card {
+    background: #fff; border-radius: 16px;
+    padding: 20px 20px; margin-bottom: 16px;
+    box-shadow: 0 4px 18px rgba(13, 71, 161, 0.1);
+    border-left: 6px solid #1565c0;
+    position: relative;
+  }
+  .card.card-axioms { border-left-color: #7e57c2; }
+  .card.card-green { border-left-color: #43a047; }
+  .card h2 {
+    color: #0d47a1;
+    font-size: clamp(1.05rem, 3.8vw, 1.22rem);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+    line-height: 1.3;
+  }
+  .card.card-axioms h2 { color: #4527a0; }
+  .card h2 .num {
+    background: linear-gradient(135deg, #1565c0, #1a237e);
+    color: #fff; width: 32px; height: 32px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0;
+  }
+  .card.card-axioms h2 .num {
+    background: linear-gradient(135deg, #7e57c2, #4527a0);
+  }
+  .card h3 {
+    color: #143753;
+    font-size: clamp(1rem, 3.5vw, 1.1rem);
+    margin: 14px 0 8px; font-weight: 650;
+  }
+  .card p { line-height: 1.65; margin-bottom: 10px; font-size: clamp(0.92rem, 3.4vw, 1rem); }
+  .card ul { margin: 8px 0 12px 20px; line-height: 1.7; font-size: clamp(0.92rem, 3.4vw, 1rem); }
+  .card li { margin-bottom: 5px; }
+
+  .term {
+    background: #fff9c4; padding: 1px 6px;
+    border-radius: 5px; font-weight: 600; color: #7a5c00;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #e3f2fd, #e8f5e9);
+    border-radius: 12px; padding: 14px 16px;
+    margin: 12px 0; border-left: 5px solid #43a047;
+    font-size: clamp(0.9rem, 3.4vw, 0.98rem);
+    line-height: 1.6;
+  }
+  .highlight-box strong { color: #1b5e20; }
+
+  .warn-box {
+    background: #fff3e0; border-radius: 12px;
+    padding: 14px 16px; margin: 12px 0;
+    border-left: 5px solid #ef6c00;
+    font-size: clamp(0.9rem, 3.4vw, 0.98rem);
+    line-height: 1.6;
+  }
+  .warn-box strong { color: #e65100; }
+
+  .proof-box {
+    background: #f3f7fb; border-radius: 12px;
+    padding: 14px 16px; margin: 12px 0;
+    border-left: 5px solid #7e57c2;
+    font-size: clamp(0.9rem, 3.4vw, 0.98rem);
+    line-height: 1.65;
+  }
+  .proof-box strong { color: #4527a0; }
+
+  .axiom-text {
+    font-size: clamp(1rem, 3.8vw, 1.1rem);
+    line-height: 1.6; color: #1b2c3f;
+    background: #ede7f6; padding: 14px 18px;
+    border-radius: 14px; margin: 12px 0 10px;
+    border-left: 6px solid #7e57c2;
+    font-weight: 500;
+  }
+
+  .consequence {
+    background: #f4faff; border-radius: 14px;
+    padding: 16px 18px; margin-bottom: 12px;
+    border: 1px dashed #8bb3d4;
+    font-size: clamp(0.92rem, 3.4vw, 1rem);
+    line-height: 1.6;
+  }
+  .consequence h4 {
+    font-size: clamp(1rem, 3.6vw, 1.12rem);
+    font-weight: 700; color: #143753;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Схема */
+  .scheme {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; margin: 16px 0;
+  }
+  .scheme-top {
+    background: linear-gradient(135deg, #1a237e, #1565c0);
+    color: #fff; padding: 10px 24px;
+    border-radius: 12px; font-weight: 700;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(26,35,126,0.3);
+    font-size: clamp(0.9rem, 3.4vw, 1rem);
+  }
+  .scheme-arrow { font-size: 1.4rem; color: #1565c0; line-height: 1; }
+  .scheme-row {
+    display: flex; gap: 10px;
+    flex-wrap: wrap; justify-content: center; width: 100%;
+  }
+  .scheme-item {
+    background: #fff; border: 2px solid #1565c0;
+    border-radius: 12px; padding: 10px 14px;
+    text-align: center; font-weight: 600;
+    color: #0d47a1; flex: 1 1 130px;
+    max-width: 220px;
+    font-size: clamp(0.82rem, 3.2vw, 0.92rem);
+    box-shadow: 0 3px 10px rgba(21,101,192,0.12);
+    line-height: 1.3;
+  }
+  .scheme-item small {
+    display: block; font-weight: 400;
+    color: #607d8b; margin-top: 4px; font-size: 0.72rem;
+  }
+
+  /* Таблица */
+  .table-wrap {
+    width: 100%; overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 12px 0; border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(13,71,161,0.08);
+  }
+  table {
+    width: 100%; min-width: 420px;
+    border-collapse: collapse; border-radius: 10px;
+    overflow: hidden;
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+  }
+  th {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: #fff; padding: 10px 12px;
+    text-align: left; font-weight: 600;
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 12px; border-bottom: 1px solid #e0e8f0;
+    line-height: 1.4;
+  }
+  tr:nth-child(even) td { background: #f5faff; }
+
+  /* Определения */
+  .def-list { display: flex; flex-direction: column; gap: 10px; }
+  .def-item {
+    background: #f7faff; border-radius: 12px;
+    padding: 12px 16px;
+    border-left: 4px solid #4a90c2;
+    font-size: clamp(0.9rem, 3.3vw, 0.98rem);
+    line-height: 1.6;
+  }
+  .def-item b { color: #0d47a1; display: inline-block; }
+
+  /* Навигация в теории */
+  .theory-nav {
+    display: flex; justify-content: space-between;
+    gap: 10px; margin-top: 20px; margin-bottom: 10px;
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 12px 14px;
+    background: #fff; border: 2px solid #1565c0;
+    color: #1565c0; border-radius: 25px;
+    font-size: clamp(0.82rem, 3.2vw, 0.92rem);
+    font-weight: 600; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+    min-height: 46px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px;
+  }
+  .nav-btn:active { transform: scale(0.97); }
+  .nav-btn:disabled {
+    opacity: 0.35; cursor: not-allowed;
+  }
+  .nav-btn.next {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: #fff; border-color: #0d47a1;
+  }
+  .card.card-axioms ~ .theory-nav .nav-btn { border-color: #7e57c2; color: #7e57c2; }
+  .card.card-axioms ~ .theory-nav .nav-btn.next {
+    background: linear-gradient(135deg, #7e57c2, #4527a0);
+    color: #fff; border-color: #4527a0;
+  }
+  @media (hover: hover) {
+    .nav-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(21,101,192,0.25); }
+  }
+
+  /* Прогресс */
+  .progress-wrap {
+    background: #fff; border-radius: 14px;
+    padding: 14px 18px; margin-bottom: 16px;
+    box-shadow: 0 4px 18px rgba(13, 71, 161, 0.08);
+  }
+  .progress-row {
+    display: flex; align-items: center;
+    gap: 12px; margin-bottom: 10px;
+    font-size: clamp(0.82rem, 3.2vw, 0.92rem);
+  }
+  .progress-row:last-child { margin-bottom: 0; }
+  .progress-label {
+    flex: 0 0 110px; font-weight: 600;
+    color: #455a64;
+  }
+  .progress-bar {
+    flex: 1; height: 10px;
+    background: #e0e8f0; border-radius: 6px;
+    overflow: hidden; position: relative;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 6px;
+    background: linear-gradient(90deg, #1565c0, #4a90c2);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-fill.purple {
+    background: linear-gradient(90deg, #7e57c2, #b39ddb);
+  }
+  .progress-percent {
+    flex: 0 0 50px; text-align: right;
+    font-weight: 700; color: #0d47a1;
+  }
+
+  /* Иллюстрации */
+  .illustration {
+    background: #eef3fa; border-radius: 14px;
+    padding: 14px 16px; margin-top: 14px;
+    display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap;
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+    color: #1e3b58; line-height: 1.5;
+  }
+  .illustration svg { flex-shrink: 0; max-width: 100%; height: auto; }
+  .illustration span { flex: 1 1 180px; min-width: 0; }
+  @media (max-width: 420px) {
+    .illustration {
+      flex-direction: column;
+      align-items: flex-start; gap: 12px;
+    }
+    .illustration svg { width: 100%; max-width: 320px; }
+  }
+
+  /* ПРАКТИКА */
+  .task-desc {
+    color: #546e7a; margin-bottom: 12px;
+    font-size: clamp(0.85rem, 3.2vw, 0.94rem);
+    line-height: 1.5;
+  }
+  .match-wrap {
+    display: flex; gap: 16px;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .match-col {
+    display: flex; flex-direction: column; gap: 10px;
+    flex: 1 1 260px; min-width: 0;
+  }
+  .match-item {
+    padding: 14px 14px;
+    border: 2px solid #cfd8dc; border-radius: 10px;
+    background: #fff; cursor: pointer;
+    transition: all 0.18s; font-weight: 600;
+    text-align: center; user-select: none;
+    font-size: clamp(0.85rem, 3.3vw, 0.95rem);
+    line-height: 1.35; min-height: 48px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .match-item:active:not(.done) { transform: scale(0.98); }
+  .match-item.selected {
+    border-color: #ff9800; background: #fff3e0;
+    box-shadow: 0 0 0 3px rgba(255,152,0,0.25);
+  }
+  .match-item.done {
+    border-color: #43a047; background: #e8f5e9;
+    color: #1b5e20; cursor: default;
+  }
+  .match-item.wrong {
+    animation: shake 0.4s; border-color: #e53935;
+    background: #ffebee;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-7px); }
+    75% { transform: translateX(7px); }
+  }
+
+  /* Заполнение пропусков */
+  .fill-task {
+    background: #f7faff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    border-left: 5px solid #4a90c2;
+    font-size: clamp(0.9rem, 3.4vw, 1rem);
+    line-height: 2.2;
+  }
+  .fill-input {
+    display: inline-block;
+    min-width: 130px;
+    padding: 6px 10px;
+    border: 2px solid #cfd8dc;
+    border-radius: 8px;
+    font-size: clamp(0.85rem, 3.3vw, 0.95rem);
+    font-family: inherit;
+    background: #fff;
+    color: #1b2c3f;
+    transition: all 0.2s;
+    vertical-align: middle;
+  }
+  .fill-input:focus {
+    outline: none;
+    border-color: #1565c0;
+    box-shadow: 0 0 0 3px rgba(21,101,192,0.15);
+  }
+  .fill-input.correct {
+    border-color: #43a047;
+    background: #e8f5e9;
+    color: #1b5e20;
+    font-weight: 600;
+  }
+  .fill-input.wrong {
+    border-color: #e53935;
+    background: #ffebee;
+    color: #b71c1c;
+    font-weight: 600;
+  }
+  .fill-input:disabled {
+    cursor: default;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 13px 24px; border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: #fff;
+    font-size: clamp(0.88rem, 3.4vw, 0.95rem);
+    font-weight: 600; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+    margin-top: 12px; min-height: 46px;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn.secondary {
+    background: #fff; color: #1565c0;
+    border: 2px solid #1565c0;
+  }
+  .btn.btn-purple {
+    background: linear-gradient(135deg, #7e57c2, #4527a0);
+  }
+  .btn.btn-purple.secondary {
+    background: #fff; color: #7e57c2;
+    border: 2px solid #7e57c2;
+  }
+  @media (hover: hover) {
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(21,101,192,0.4); }
+    .btn.secondary:hover { background: #e3f2fd; box-shadow: none; }
+  }
+
+  .feedback {
+    margin-top: 12px; padding: 12px 14px;
+    border-radius: 10px; font-weight: 600;
+    display: none;
+    font-size: clamp(0.85rem, 3.3vw, 0.95rem);
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; animation: fade 0.3s; }
+  .feedback.ok { background: #e8f5e9; color: #1b5e20; border-left: 5px solid #43a047; }
+  .feedback.bad { background: #ffebee; color: #b71c1c; border-left: 5px solid #e53935; }
+
+  /* ТЕСТ */
+  .question {
+    background: #fff; border-radius: 14px;
+    padding: 18px 18px; margin-bottom: 14px;
+    box-shadow: 0 4px 14px rgba(13,71,161,0.09);
+    border-left: 6px solid #1565c0;
+  }
+  .question.q-axioms { border-left-color: #7e57c2; }
+  .q-text {
+    font-weight: 700; color: #0d47a1;
+    margin-bottom: 12px;
+    font-size: clamp(0.92rem, 3.5vw, 1rem);
+    line-height: 1.45;
+  }
+  .q-axioms .q-text { color: #4527a0; }
+  .q-num {
+    display: inline-block; background: #1565c0;
+    color: #fff; width: 24px; height: 24px;
+    border-radius: 50%; text-align: center;
+    line-height: 24px; font-size: 0.8rem;
+    margin-right: 6px; flex-shrink: 0;
+  }
+  .q-axioms .q-num { background: #7e57c2; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    padding: 13px 14px;
+    border: 2px solid #e0e8f0; border-radius: 10px;
+    cursor: pointer; transition: all 0.18s;
+    background: #fafcff;
+    font-size: clamp(0.85rem, 3.3vw, 0.95rem);
+    display: flex; align-items: center; gap: 10px;
+    line-height: 1.4; min-height: 48px;
+  }
+  .option:active:not(.locked) { transform: scale(0.99); }
+  @media (hover: hover) {
+    .option:hover:not(.locked) { border-color: #1565c0; background: #e3f2fd; }
+    .q-axioms .option:hover:not(.locked) { border-color: #7e57c2; background: #ede7f6; }
+  }
+  .option .mark {
+    width: 22px; height: 22px;
+    border: 2px solid #b0bec5; border-radius: 50%;
+    flex-shrink: 0; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 0.72rem; font-weight: 700; color: #fff;
+  }
+  .option.correct { border-color: #43a047; background: #e8f5e9; }
+  .option.correct .mark { background: #43a047; border-color: #43a047; }
+  .option.wrong { border-color: #e53935; background: #ffebee; }
+  .option.wrong .mark { background: #e53935; border-color: #e53935; }
+  .option.locked { cursor: default; }
+
+  /* Итоговый тест — выбранный вариант без подсветки правильности */
+  .option.chosen {
+    border-color: #1565c0;
+    background: #e3f2fd;
+  }
+  .option.chosen .mark {
+    background: #1565c0;
+    border-color: #1565c0;
+  }
+  .card-green .option.chosen {
+    border-color: #43a047;
+    background: #e8f5e9;
+  }
+  .card-green .option.chosen .mark {
+    background: #43a047;
+    border-color: #43a047;
+  }
+
+  .result-box {
+    text-align: center;
+    background: linear-gradient(135deg, #1565c0, #1a237e);
+    color: #fff; border-radius: 18px;
+    padding: 26px 20px; display: none;
+    box-shadow: 0 8px 30px rgba(26,35,126,0.35);
+  }
+  .result-box.result-axioms {
+    background: linear-gradient(135deg, #7e57c2, #4527a0);
+    box-shadow: 0 8px 30px rgba(126,87,194,0.35);
+  }
+  .result-box.result-green {
+    background: linear-gradient(135deg, #43a047, #1b5e20);
+    box-shadow: 0 8px 30px rgba(67,160,71,0.35);
+  }
+  .result-box.show { display: block; animation: fade 0.5s; }
+  .result-box .score {
+    font-size: clamp(2.2rem, 10vw, 3.2rem);
+    font-weight: 800; margin: 8px 0;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  }
+  .result-box .verdict {
+    font-size: clamp(1rem, 3.8vw, 1.15rem);
+    margin-bottom: 6px; opacity: 0.95;
+  }
+  .score-msg {
+    font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+    line-height: 1.5; opacity: 0.9;
+    margin-bottom: 18px;
+  }
+
+  .quiz-submit-wrap {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .btn-submit-final {
+    display: inline-block;
+    padding: 16px 40px;
+    border: none; border-radius: 40px;
+    background: linear-gradient(135deg, #43a047, #1b5e20);
+    color: #fff;
+    font-size: clamp(1rem, 3.8vw, 1.15rem);
+    font-weight: 700; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+    box-shadow: 0 10px 24px -8px rgba(67,160,71,0.6);
+    min-height: 52px;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .btn-submit-final:active { transform: scale(0.97); }
+  @media (hover: hover) {
+    .btn-submit-final:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -8px rgba(67,160,71,0.7); }
+  }
+  .btn-submit-final:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .submit-hint {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #78909c;
+  }
+
+  /* ОГЛАВЛЕНИЕ */
+  .toc {
+    background: #fff; border-radius: 14px;
+    padding: 16px 18px; margin-bottom: 16px;
+    box-shadow: 0 4px 18px rgba(13, 71, 161, 0.08);
+  }
+  .toc-title {
+    font-weight: 700; color: #0d47a1;
+    margin-bottom: 10px;
+    font-size: clamp(0.95rem, 3.6vw, 1.05rem);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .toc-title.toc-purple { color: #4527a0; }
+  .toc-list {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .toc-item {
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #f0f6fe; color: #1565c0;
+    font-size: clamp(0.75rem, 3vw, 0.85rem);
+    font-weight: 600; cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.15s;
+    user-select: none;
+    min-height: 34px;
+    display: inline-flex; align-items: center;
+  }
+  .toc-item:active { transform: scale(0.97); }
+  .toc-item.active {
+    background: #1565c0; color: #fff;
+    border-color: #0d47a1;
+  }
+  .toc-purple .toc-item { background: #ede7f6; color: #4527a0; }
+  .toc-purple .toc-item.active {
+    background: #7e57c2; color: #fff;
+    border-color: #4527a0;
+  }
+  .toc-item .toc-check {
+    margin-left: 4px; color: #43a047; font-weight: 700;
+  }
+  .toc-item.active .toc-check { color: #b9f6ca; }
+
+  footer {
+    text-align: center; color: #78909c;
+    font-size: clamp(0.75rem, 3vw, 0.85rem);
+    margin-top: 26px; padding: 0 16px;
+    line-height: 1.5;
+  }
+  footer strong { color: #1565c0; }
+
+  @media (max-width: 600px) {
+    .card { padding: 16px 14px; border-left-width: 5px; border-radius: 14px; }
+    .container { padding: 0 10px; }
+    .axiom-text { padding: 12px 14px; border-left-width: 5px; border-radius: 12px; }
+    .consequence { padding: 14px 14px; }
+    .question { padding: 16px 14px; border-left-width: 5px; }
+    .option { padding: 12px 12px; }
+    .scheme-item { flex: 1 1 100%; max-width: none; }
+    .match-col { flex: 1 1 100%; }
+    .result-box { padding: 22px 16px; }
+    .btn { width: 100%; text-align: center; }
+    .btn-submit-final { width: 100%; }
+    .main-tab { font-size: 0.72rem; padding: 10px 6px; }
+    .sub-tab { font-size: 0.8rem; padding: 8px 8px; }
+    .progress-label { flex: 0 0 80px; font-size: 0.78rem; }
+    .progress-percent { flex: 0 0 42px; font-size: 0.8rem; }
+    .fill-input { min-width: 110px; }
+  }
+
+  @media (max-width: 380px) {
+    h1 { font-size: 1.05rem; }
+    .main-tab { font-size: 0.66rem; padding: 9px 4px; min-height: 42px; }
+    .sub-tab { font-size: 0.74rem; padding: 7px 5px; min-height: 38px; }
+    .card { padding: 14px 12px; }
+    .fill-input { min-width: 90px; font-size: 0.82rem; }
+  }
+
+  @media (hover: none) {
+    .main-tab:hover { transform: none; }
+    .btn:hover { transform: none; box-shadow: none; }
+    .match-item:hover:not(.done) { border-color: #cfd8dc; background: #fff; transform: none; }
+    .option:hover:not(.locked) { border-color: #e0e8f0; background: #fafcff; }
+    .nav-btn:hover:not(:disabled) { transform: none; box-shadow: none; }
+    .btn-submit-final:hover { transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="school">
+    <div class="emblem">📐</div>
+    <div class="school-name">
+      <div class="main">Государственное учреждение образования</div>
+      <div class="sub">«Средняя школа № 4 г. Светлогорска»</div>
+    </div>
+  </div>
+  <h1>Введение в стереометрию</h1>
+  <div class="subtitle">Интерактивное пособие по геометрии · 10 класс</div>
+</header>
+
+<nav class="main-nav">
+  <button class="main-tab active" data-main="topic1">🔷 Тема 1. Многогранники</button>
+  <button class="main-tab tab-axioms" data-main="topic2">🔶 Тема 2. Аксиомы стереометрии</button>
+  <button class="main-tab tab-final" data-main="final">🎓 Итоговый тест</button>
+</nav>
+
+<div class="container">
+
+<!-- ================= ТЕМА 1 ================= -->
+<section id="topic1" class="section active">
+
+  <div class="subnav">
+    <button class="sub-tab active" data-sub="t1-theory">📖 Теория</button>
+    <button class="sub-tab" data-sub="t1-practice">✏️ Практика</button>
+    <button class="sub-tab" data-sub="t1-test">✅ Тест темы</button>
+  </div>
+
+  <!-- Теория темы 1 -->
+  <div id="t1-theory" class="subsection active">
+
+    <div class="progress-wrap">
+      <div class="progress-row">
+        <div class="progress-label">Прогресс темы</div>
+        <div class="progress-bar"><div class="progress-fill" id="t1Progress"></div></div>
+        <div class="progress-percent" id="t1Percent">0%</div>
+      </div>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 Содержание темы 1</div>
+      <div class="toc-list" id="t1Toc">
+        <div class="toc-item" data-theory="t1-1">1.1. Понятие многогранника</div>
+        <div class="toc-item" data-theory="t1-2">1.2. Призма</div>
+        <div class="toc-item" data-theory="t1-3">1.3. Параллелепипед</div>
+        <div class="toc-item" data-theory="t1-4">1.4. Пирамида</div>
+        <div class="toc-item" data-theory="t1-5">1.5. Тетраэдр</div>
+        <div class="toc-item" data-theory="t1-6">1.6. Диагонали</div>
+      </div>
+    </div>
+
+    <!-- 1.1 -->
+    <div class="theory-block" id="t1-1" data-theory-block="t1-1">
+      <div class="card">
+        <div class="topic-badge badge-blue">🔷 Тема 1 · 1.1</div>
+        <h2><span class="num">1</span> Понятие многогранника</h2>
+        <p><span class="term">Многогранник</span> — тело, поверхность которого состоит из конечного числа плоских многоугольников.</p>
+        <p>Эти многоугольники называются:</p>
+        <ul>
+          <li><b>гранями</b> многогранника;</li>
+          <li>их стороны — <b>рёбрами</b>;</li>
+          <li>их вершины — <b>вершинами многогранника</b>.</li>
+        </ul>
+        <div class="highlight-box">
+          <strong>Основные виды многогранников:</strong>
+          <ul style="margin-top:6px;">
+            <li><b>призма</b> (прямая, правильная);</li>
+            <li><b>параллелепипед</b> (прямой, прямоугольный);</li>
+            <li><b>пирамида</b> (правильная);</li>
+            <li><b>тетраэдр</b> (правильный).</li>
+          </ul>
+        </div>
+        <div class="illustration">
+          <svg width="100" height="80" viewBox="0 0 100 80">
+            <polygon points="15,70 70,70 85,55 30,55" fill="#c1daf5" stroke="#1e4b7a" stroke-width="2"/>
+            <polygon points="15,70 15,25 30,10 70,10 70,70" fill="#b7d4f0" stroke="#1e4b7a" stroke-width="2" opacity="0.7"/>
+            <line x1="15" y1="25" x2="30" y2="10" stroke="#1e4b7a" stroke-width="2"/>
+            <text x="42" y="45" font-size="12" fill="#0e2c4b">призма</text>
+          </svg>
+          <svg width="100" height="80" viewBox="0 0 100 80">
+            <polygon points="20,70 60,70 80,50 40,50" fill="#c1daf5" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="20" y1="70" x2="20" y2="30" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="60" y1="70" x2="60" y2="30" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="80" y1="50" x2="80" y2="10" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="40" y1="50" x2="40" y2="10" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="20" y1="30" x2="60" y2="30" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="60" y1="30" x2="80" y2="10" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="40" y1="10" x2="20" y2="30" stroke="#1e4b7a" stroke-width="2"/>
+            <text x="42" y="45" font-size="11" fill="#0e2c4b">паралл-д</text>
+          </svg>
+          <svg width="100" height="80" viewBox="0 0 100 80">
+            <polygon points="50,10 15,70 85,70" fill="#b7d4f0" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="50" y1="10" x2="50" y2="40" stroke="#1e4b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="15" y1="70" x2="50" y2="40" stroke="#1e4b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="85" y1="70" x2="50" y2="40" stroke="#1e4b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <circle cx="50" cy="10" r="3" fill="#0e2c4b"/>
+            <text x="38" y="45" font-size="12" fill="#0e2c4b">пирамида</text>
+          </svg>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" disabled>← Назад</button>
+        <button class="nav-btn next" data-go="t1-2">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 1.2 -->
+    <div class="theory-block" id="t1-2" data-theory-block="t1-2" style="display:none;">
+      <div class="card">
+        <div class="topic-badge badge-blue">🔷 Тема 1 · 1.2</div>
+        <h2><span class="num">2</span> Призма</h2>
+        <div class="def-list">
+          <div class="def-item"><b>Призма</b> — многогранник, две грани которого — равные n-угольники (основания призмы), а остальные n граней — параллелограммы (боковые грани).</div>
+          <div class="def-item"><b>Прямая призма</b> — призма, боковые рёбра которой перпендикулярны рёбрам основания.</div>
+          <div class="def-item"><b>Правильная призма</b> — прямая призма, в основании которой лежит правильный многоугольник (равносторонний треугольник, квадрат и т. д.).</div>
+        </div>
+        <h3>Свойства призмы</h3>
+        <div class="highlight-box">
+          <ul style="margin:0;">
+            <li>все боковые рёбра призмы равны между собой (как противоположные стороны параллелограммов);</li>
+            <li>у правильной призмы боковые грани — равные прямоугольники.</li>
+          </ul>
+        </div>
+        <div class="illustration">
+          <svg width="140" height="100" viewBox="0 0 140 100">
+            <polygon points="20,90 100,90 120,70 40,70" fill="#c1daf5" stroke="#1e4b7a" stroke-width="2"/>
+            <polygon points="20,90 20,35 40,15 100,15 100,90" fill="#b7d4f0" stroke="#1e4b7a" stroke-width="2" opacity="0.7"/>
+            <line x1="20" y1="35" x2="40" y2="15" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="40" y1="15" x2="120" y2="15" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="100" y1="15" x2="120" y2="35" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="120" y1="35" x2="120" y2="70" stroke="#1e4b7a" stroke-width="2"/>
+            <text x="55" y="55" font-size="12" fill="#0e2c4b">α</text>
+          </svg>
+          <span>Прямая призма: боковые рёбра перпендикулярны основанию. Правильная призма — прямая призма с правильным многоугольником в основании.</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t1-1">← Назад</button>
+        <button class="nav-btn next" data-go="t1-3">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 1.3 -->
+    <div class="theory-block" id="t1-3" data-theory-block="t1-3" style="display:none;">
+      <div class="card">
+        <div class="topic-badge badge-blue">🔷 Тема 1 · 1.3</div>
+        <h2><span class="num">3</span> Параллелепипед</h2>
+        <div class="def-list">
+          <div class="def-item"><b>Параллелепипед</b> — четырёхугольная призма, в основании которой лежит параллелограмм.</div>
+          <div class="def-item"><b>Прямой параллелепипед</b> — параллелепипед, у которого боковые грани — прямоугольники.</div>
+          <div class="def-item"><b>Прямоугольный параллелепипед</b> — прямой параллелепипед, в основании которого лежит прямоугольник. Все его грани — прямоугольники.</div>
+        </div>
+        <h3>Три вида параллелепипедов</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Вид</th><th>Основание</th><th>Боковые грани</th></tr>
+            <tr><td>Наклонный</td><td>Параллелограмм</td><td>Параллелограммы</td></tr>
+            <tr><td>Прямой</td><td>Параллелограмм</td><td>Прямоугольники</td></tr>
+            <tr><td>Прямоугольный</td><td>Прямоугольник</td><td>Прямоугольники</td></tr>
+          </table>
+        </div>
+        <div class="warn-box">
+          <strong>Важно!</strong> Правильная четырёхугольная призма является параллелепипедом (в основании — квадрат, то есть параллелограмм). Но не любая четырёхугольная призма — параллелепипед: в основании может лежать произвольный четырёхугольник.
+        </div>
+        <div class="illustration">
+          <svg width="140" height="100" viewBox="0 0 140 100">
+            <polygon points="20,90 60,90 80,70 40,70" fill="#c1daf5" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="20" y1="90" x2="20" y2="40" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="60" y1="90" x2="60" y2="40" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="80" y1="70" x2="80" y2="20" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="40" y1="70" x2="40" y2="20" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="20" y1="40" x2="60" y2="40" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="60" y1="40" x2="80" y2="20" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="40" y1="20" x2="20" y2="40" stroke="#1e4b7a" stroke-width="2"/>
+            <text x="45" y="60" font-size="12" fill="#0e2c4b">параллелепипед</text>
+          </svg>
+          <span>Прямоугольный параллелепипед — все шесть граней прямоугольники.</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t1-2">← Назад</button>
+        <button class="nav-btn next" data-go="t1-4">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 1.4 -->
+    <div class="theory-block" id="t1-4" data-theory-block="t1-4" style="display:none;">
+      <div class="card">
+        <div class="topic-badge badge-blue">🔷 Тема 1 · 1.4</div>
+        <h2><span class="num">4</span> Пирамида</h2>
+        <div class="def-list">
+          <div class="def-item"><b>Пирамида</b> — многогранник, у которого одна из граней — многоугольник (основание пирамиды), а остальные грани (боковые) — треугольники с общей вершиной (вершиной пирамиды).</div>
+          <div class="def-item"><b>Правильная пирамида</b> — пирамида, у которой в основании лежит правильный многоугольник, а отрезок, соединяющий вершину с центром основания, перпендикулярен основанию. Её боковые рёбра и боковые грани равны.</div>
+        </div>
+        <div class="highlight-box">
+          💡 В правильной пирамиде сумма плоских углов при вершине:
+          <ul style="margin-top:6px;">
+            <li>для правильной треугольной пирамиды (тетраэдра) — <b>180°</b>;</li>
+            <li>для правильной четырёхугольной пирамиды — <b>240°</b>.</li>
+          </ul>
+        </div>
+        <div class="illustration">
+          <svg width="140" height="110" viewBox="0 0 140 110">
+            <polygon points="70,10 20,90 120,90" fill="#b7d4f0" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="70" y1="10" x2="70" y2="50" stroke="#1e4b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="20" y1="90" x2="70" y2="50" stroke="#1e4b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="120" y1="90" x2="70" y2="50" stroke="#1e4b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <circle cx="70" cy="10" r="4" fill="#0e2c4b"/>
+            <text x="75" y="20" font-size="12" font-weight="bold" fill="#0e2c4b">S</text>
+            <text x="10" y="100" font-size="12" font-weight="bold" fill="#0e2c4b">A</text>
+            <text x="120" y="100" font-size="12" font-weight="bold" fill="#0e2c4b">B</text>
+            <text x="60" y="105" font-size="12" font-weight="bold" fill="#0e2c4b">C</text>
+          </svg>
+          <span>Правильная треугольная пирамида (S — вершина, ABC — основание).</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t1-3">← Назад</button>
+        <button class="nav-btn next" data-go="t1-5">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 1.5 -->
+    <div class="theory-block" id="t1-5" data-theory-block="t1-5" style="display:none;">
+      <div class="card">
+        <div class="topic-badge badge-blue">🔷 Тема 1 · 1.5</div>
+        <h2><span class="num">5</span> Тетраэдр</h2>
+        <div class="def-list">
+          <div class="def-item"><b>Тетраэдр</b> — любая треугольная пирамида.</div>
+          <div class="def-item"><b>Правильный тетраэдр</b> — тетраэдр, все грани которого — правильные (равносторонние) треугольники.</div>
+        </div>
+        <div class="highlight-box">
+          <strong>Свойства правильного тетраэдра:</strong>
+          <ul style="margin-top:6px;">
+            <li>все рёбра равны между собой;</li>
+            <li>все грани — равносторонние треугольники;</li>
+            <li>сумма плоских углов при каждой вершине = 180°.</li>
+          </ul>
+        </div>
+        <div class="illustration">
+          <svg width="140" height="120" viewBox="0 0 140 120">
+            <polygon points="70,15 20,105 120,105" fill="#b7d4f0" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="70" y1="15" x2="120" y2="105" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="70" y1="15" x2="20" y2="105" stroke="#1e4b7a" stroke-width="2"/>
+            <line x1="20" y1="105" x2="120" y2="105" stroke="#1e4b7a" stroke-width="2"/>
+            <text x="60" y="12" font-size="13" font-weight="bold" fill="#0e2c4b">D</text>
+            <text x="8" y="118" font-size="13" font-weight="bold" fill="#0e2c4b">A</text>
+            <text x="122" y="118" font-size="13" font-weight="bold" fill="#0e2c4b">C</text>
+            <text x="60" y="118" font-size="13" font-weight="bold" fill="#0e2c4b">B</text>
+          </svg>
+          <span>Тетраэдр ABCD. Правильный тетраэдр — все рёбра равны.</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t1-4">← Назад</button>
+        <button class="nav-btn next" data-go="t1-6">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 1.6 -->
+    <div class="theory-block" id="t1-6" data-theory-block="t1-6" style="display:none;">
+      <div class="card">
+        <div class="topic-badge badge-blue">🔷 Тема 1 · 1.6</div>
+        <h2><span class="num">6</span> Диагонали многогранников</h2>
+        <div class="def-list">
+          <div class="def-item"><b>Диагональ многогранника</b> — отрезок, соединяющий две вершины многогранника, не принадлежащие одной грани.</div>
+        </div>
+        <div class="highlight-box">
+          <ul style="margin:0;">
+            <li>у треугольной призмы диагоналей <b>нет</b> (все вершины связаны только рёбрами);</li>
+            <li>число диагоналей n-угольной призмы = n(n − 3).</li>
+          </ul>
+        </div>
+        <div class="illustration">
+          <svg width="140" height="100" viewBox="0 0 140 100">
+            <polygon points="20,90 100,90 120,70 40,70" fill="#c1daf5" stroke="#1e4b7a" stroke-width="2"/>
+            <polygon points="20,90 20,35 40,15 100,15 100,90" fill="#b7d4f0" stroke="#1e4b7a" stroke-width="2" opacity="0.6"/>
+            <line x1="20" y1="90" x2="100" y2="15" stroke="#c62828" stroke-width="2.5"/>
+            <circle cx="20" cy="90" r="3.5" fill="#0e2c4b"/>
+            <circle cx="100" cy="15" r="3.5" fill="#0e2c4b"/>
+            <text x="55" y="50" font-size="12" fill="#c62828">диагональ</text>
+          </svg>
+          <span>Диагональ соединяет вершины, не лежащие в одной грани.</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t1-5">← Назад</button>
+        <button class="nav-btn next" disabled>Далее →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Практика темы 1 -->
+  <div id="t1-practice" class="subsection">
+    <div class="card">
+      <div class="topic-badge badge-blue">🔷 Тема 1 · Практика</div>
+      <h2><span class="num">1</span> Соотнеси многогранник и его определение</h2>
+      <p class="task-desc">Нажми на многогранник слева, а затем на соответствующее определение справа.</p>
+      <div class="match-wrap">
+        <div class="match-col" id="p1colLeft"></div>
+        <div class="match-col" id="p1colRight"></div>
+      </div>
+      <div class="feedback" id="p1feedback"></div>
+      <button class="btn secondary" onclick="resetP1()">🔄 Начать заново</button>
+    </div>
+
+    <div class="card">
+      <div class="topic-badge badge-blue">🔷 Тема 1 · Практика</div>
+      <h2><span class="num">2</span> Заполни пропуски</h2>
+      <p class="task-desc">Впиши пропущенные слова в определения. Нажми «Проверить», чтобы увидеть результат.</p>
+      <div id="t1FillBox"></div>
+      <button class="btn" onclick="checkT1Fill()">✅ Проверить</button>
+      <button class="btn secondary" onclick="resetT1Fill()">🔄 Начать заново</button>
+      <div class="feedback" id="t1FillFeedback"></div>
+    </div>
+
+    <div class="card">
+      <div class="topic-badge badge-blue">🔷 Тема 1 · Практика</div>
+      <h2><span class="num">3</span> Верно или неверно?</h2>
+      <p class="task-desc">Прочитай утверждение и выбери «Верно» или «Неверно».</p>
+      <div id="t1tfBox"></div>
+      <div class="feedback" id="t1tfFeedback"></div>
+      <button class="btn secondary" onclick="resetT1TF()">🔄 Начать заново</button>
+    </div>
+  </div>
+
+  <!-- Тест темы 1 -->
+  <div id="t1-test" class="subsection">
+    <div class="card">
+      <div class="topic-badge badge-blue">🔷 Тема 1 · Тест</div>
+      <h2><span class="num">?</span> Тест по теме «Многогранники»</h2>
+      <p>Ответь на 10 вопросов. После выбора варианта сразу увидишь результат.</p>
+    </div>
+    <div id="t1QuizBox"></div>
+    <div class="result-box" id="t1ResultBox">
+      <div class="verdict" id="t1Verdict"></div>
+      <div class="score" id="t1ScoreText">0 / 10</div>
+      <div class="score-msg" id="t1ScoreMsg"></div>
+      <button class="btn" style="background:linear-gradient(135deg,#ffd54f,#ffb300); color:#4e342e;" onclick="restartT1Quiz()">🔄 Пройти заново</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= ТЕМА 2 ================= -->
+<section id="topic2" class="section">
+
+  <div class="subnav">
+    <button class="sub-tab active" data-sub="t2-theory">📖 Теория</button>
+    <button class="sub-tab" data-sub="t2-practice">✏️ Практика</button>
+    <button class="sub-tab" data-sub="t2-test">✅ Тест темы</button>
+  </div>
+
+  <!-- Теория темы 2 -->
+  <div id="t2-theory" class="subsection active">
+
+    <div class="progress-wrap">
+      <div class="progress-row">
+        <div class="progress-label">Прогресс темы</div>
+        <div class="progress-bar"><div class="progress-fill purple" id="t2Progress"></div></div>
+        <div class="progress-percent" id="t2Percent">0%</div>
+      </div>
+    </div>
+
+    <div class="toc toc-purple">
+      <div class="toc-title toc-purple">📋 Содержание темы 2</div>
+      <div class="toc-list" id="t2Toc">
+        <div class="toc-item" data-theory="t2-1">2.1. Основные понятия</div>
+        <div class="toc-item" data-theory="t2-2">2.2. Аксиома A1</div>
+        <div class="toc-item" data-theory="t2-3">2.3. Аксиома A2</div>
+        <div class="toc-item" data-theory="t2-4">2.4. Аксиома A3</div>
+        <div class="toc-item" data-theory="t2-5">2.5. Следствие а)</div>
+        <div class="toc-item" data-theory="t2-6">2.6. Следствие б)</div>
+        <div class="toc-item" data-theory="t2-7">2.7. Следствие в)</div>
+        <div class="toc-item" data-theory="t2-8">2.8. Скрещивающиеся прямые</div>
+      </div>
+    </div>
+
+    <!-- 2.1 -->
+    <div class="theory-block" id="t2-1" data-theory-block="t2-1">
+      <div class="card card-axioms">
+        <div class="topic-badge badge-purple">🔶 Тема 2 · 2.1</div>
+        <h2><span class="num">1</span> Основные понятия стереометрии</h2>
+        <p><span class="term">Стереометрия</span> — раздел геометрии, в котором изучаются свойства фигур в пространстве. Основными неопределяемыми понятиями стереометрии являются <b>точка</b>, <b>прямая</b> и <b>плоскость</b>.</p>
+        <p>Плоскость, как и прямую, обозначают строчными греческими буквами: α (альфа), β (бета), γ (гамма). Точки — заглавными латинскими буквами A, B, C, прямые — строчными латинскими a, b, c.</p>
+        <div class="highlight-box">
+          <strong>Плоскость — основное неопределяемое понятие стереометрии.</strong><br>
+          Её свойства выражаются через аксиомы. Мысленно плоскость можно представить как бесконечно тонкую и бесконечно протяжённую поверхность.
+        </div>
+        <div class="scheme">
+          <div class="scheme-top">СТЕРЕОМЕТРИЯ</div>
+          <div class="scheme-arrow">▼</div>
+          <div class="scheme-row">
+            <div class="scheme-item">Точка<small>неопределяемое понятие</small></div>
+            <div class="scheme-item">Прямая<small>неопределяемое понятие</small></div>
+            <div class="scheme-item">Плоскость<small>неопределяемое понятие</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" disabled>← Назад</button>
+        <button class="nav-btn next" data-go="t2-2">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 2.2 -->
+    <div class="theory-block" id="t2-2" data-theory-block="t2-2" style="display:none;">
+      <div class="card card-axioms">
+        <div class="topic-badge badge-purple">🔶 Тема 2 · 2.2</div>
+        <h2><span class="num">2</span> Аксиома A1</h2>
+        <div class="axiom-text">
+          Через любые три точки, не лежащие на одной прямой, проходит плоскость, и притом только одна.
+        </div>
+        <p>Три точки, не лежащие на одной прямой, однозначно задают плоскость. Если же точки лежат на одной прямой, то через них можно провести бесконечно много плоскостей.</p>
+        <div class="illustration">
+          <svg width="140" height="90" viewBox="0 0 140 90" preserveAspectRatio="xMidYMid meet">
+            <polygon points="15,75 70,15 125,75" fill="#d9c8ee" stroke="#4527a0" stroke-width="2" />
+            <circle cx="70" cy="15" r="4.5" fill="#4527a0" />
+            <circle cx="15" cy="75" r="4.5" fill="#4527a0" />
+            <circle cx="125" cy="75" r="4.5" fill="#4527a0" />
+            <text x="60" y="50" font-size="15" font-weight="bold" fill="#4527a0">α</text>
+          </svg>
+          <span>Три точки A, B, C не на одной прямой → единственная плоскость α.</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t2-1">← Назад</button>
+        <button class="nav-btn next" data-go="t2-3">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 2.3 -->
+    <div class="theory-block" id="t2-3" data-theory-block="t2-3" style="display:none;">
+      <div class="card card-axioms">
+        <div class="topic-badge badge-purple">🔶 Тема 2 · 2.3</div>
+        <h2><span class="num">3</span> Аксиома A2</h2>
+        <div class="axiom-text">
+          Если две точки прямой лежат в плоскости, то все точки этой прямой лежат в этой плоскости.
+        </div>
+        <p>Говорят: «плоскость содержит прямую» или «прямая лежит в плоскости». Это позволяет, найдя две общие точки прямой и плоскости, утверждать, что вся прямая принадлежит плоскости.</p>
+        <div class="illustration">
+          <svg width="140" height="90" viewBox="0 0 140 90" preserveAspectRatio="xMidYMid meet">
+            <polygon points="15,75 70,15 125,75" fill="#d9c8ee" stroke="#4527a0" stroke-width="2" />
+            <line x1="30" y1="65" x2="110" y2="35" stroke="#c62828" stroke-width="3" />
+            <circle cx="30" cy="65" r="4.5" fill="#4527a0" />
+            <circle cx="110" cy="35" r="4.5" fill="#4527a0" />
+            <text x="60" y="50" font-size="15" font-weight="bold" fill="#4527a0">α</text>
+          </svg>
+          <span>Прямая AB лежит в плоскости α, так как A ∈ α и B ∈ α.</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t2-2">← Назад</button>
+        <button class="nav-btn next" data-go="t2-4">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 2.4 -->
+    <div class="theory-block" id="t2-4" data-theory-block="t2-4" style="display:none;">
+      <div class="card card-axioms">
+        <div class="topic-badge badge-purple">🔶 Тема 2 · 2.4</div>
+        <h2><span class="num">4</span> Аксиома A3</h2>
+        <div class="axiom-text">
+          Если две плоскости имеют общую точку, то они имеют общую прямую, на которой лежат все общие точки этих плоскостей.
+        </div>
+        <p>Пересечение двух плоскостей — прямая (если они не совпадают и не параллельны). Эта прямая называется <b>линией пересечения плоскостей</b>.</p>
+        <div class="illustration">
+          <svg width="160" height="100" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid meet">
+            <polygon points="10,75 60,10 145,28 90,90" fill="#d9c8ee" stroke="#4527a0" stroke-width="1.8" opacity="0.85" />
+            <polygon points="35,15 155,40 110,90 0,62" fill="#ede7f6" stroke="#4527a0" stroke-width="1.8" opacity="0.85" />
+            <line x1="60" y1="38" x2="88" y2="60" stroke="#c62828" stroke-width="3" />
+            <text x="65" y="25" font-size="15" font-weight="bold" fill="#4527a0">α</text>
+            <text x="105" y="75" font-size="15" font-weight="bold" fill="#4527a0">β</text>
+          </svg>
+          <span>Плоскости α и β пересекаются по прямой m.</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t2-3">← Назад</button>
+        <button class="nav-btn next" data-go="t2-5">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 2.5 -->
+    <div class="theory-block" id="t2-5" data-theory-block="t2-5" style="display:none;">
+      <div class="card card-axioms">
+        <div class="topic-badge badge-purple">🔶 Тема 2 · 2.5</div>
+        <h2><span class="num">5</span> Следствие а)</h2>
+        <div class="consequence">
+          <h4>🔹 Через прямую и не лежащую на ней точку проходит плоскость, и притом только одна.</h4>
+          <div class="proof-box">
+            <strong>Доказательство.</strong> Две точки, взятые на прямой, вместе с данной точкой дают три точки, не лежащие на одной прямой. А мы знаем, что через три точки, не лежащие на одной прямой, можно провести плоскость, и только одну (аксиома A1).
+          </div>
+        </div>
+        <div class="highlight-box">
+          <strong>Способ задания плоскости №2:</strong> прямой и точкой, не лежащей на ней.
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t2-4">← Назад</button>
+        <button class="nav-btn next" data-go="t2-6">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 2.6 -->
+    <div class="theory-block" id="t2-6" data-theory-block="t2-6" style="display:none;">
+      <div class="card card-axioms">
+        <div class="topic-badge badge-purple">🔶 Тема 2 · 2.6</div>
+        <h2><span class="num">6</span> Следствие б)</h2>
+        <div class="consequence">
+          <h4>🔹 Через две пересекающиеся прямые проходит плоскость, и притом только одна.</h4>
+          <div class="proof-box">
+            <strong>Доказательство.</strong> Точка пересечения прямых и ещё по одной точке, взятой на каждой прямой, дают три точки, не лежащие на одной прямой. А через три точки, не лежащие на одной прямой, можно провести плоскость, и только одну (аксиома A1).
+          </div>
+        </div>
+        <div class="highlight-box">
+          <strong>Способ задания плоскости №3:</strong> двумя пересекающимися прямыми.
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t2-5">← Назад</button>
+        <button class="nav-btn next" data-go="t2-7">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 2.7 -->
+    <div class="theory-block" id="t2-7" data-theory-block="t2-7" style="display:none;">
+      <div class="card card-axioms">
+        <div class="topic-badge badge-purple">🔶 Тема 2 · 2.7</div>
+        <h2><span class="num">7</span> Следствие в)</h2>
+        <div class="consequence">
+          <h4>🔹 Через две параллельные прямые проходит плоскость, и притом только одна.</h4>
+          <div class="proof-box">
+            <strong>Доказательство.</strong> По определению две параллельные прямые уже лежат в одной плоскости. Если бы существовала ещё одна плоскость, проходящая через эти параллельные прямые, то, взяв на одной из них две точки, а на другой — одну, получили бы, что через три точки, не лежащие на одной прямой, проходят две различные плоскости, что невозможно.
+          </div>
+        </div>
+        <div class="highlight-box">
+          <strong>Способ задания плоскости №4:</strong> двумя параллельными прямыми.
+        </div>
+
+        <h3>Сводная таблица: способы задания плоскости</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Способ задания</th><th>Условие</th><th>Обоснование</th></tr>
+            <tr><td>Тремя точками</td><td>Точки не лежат на одной прямой</td><td>A1</td></tr>
+            <tr><td>Прямой и точкой</td><td>Точка не лежит на прямой</td><td>Следствие а)</td></tr>
+            <tr><td>Двумя пересекающимися прямыми</td><td>Прямые имеют общую точку</td><td>Следствие б)</td></tr>
+            <tr><td>Двумя параллельными прямыми</td><td>Прямые лежат в одной плоскости</td><td>Следствие в)</td></tr>
+          </table>
+        </div>
+        <div class="warn-box">
+          <strong>Важно!</strong> Через три точки, лежащие на одной прямой, проходит бесконечно много плоскостей. Две точки задают только прямую, но не плоскость.
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t2-6">← Назад</button>
+        <button class="nav-btn next" data-go="t2-8">Далее →</button>
+      </div>
+    </div>
+
+    <!-- 2.8 -->
+    <div class="theory-block" id="t2-8" data-theory-block="t2-8" style="display:none;">
+      <div class="card card-axioms">
+        <div class="topic-badge badge-purple">🔶 Тема 2 · 2.8</div>
+        <h2><span class="num">8</span> Скрещивающиеся прямые</h2>
+        <div class="def-list">
+          <div class="def-item"><b>Определение.</b> Две прямые называются <i>скрещивающимися</i>, если они не лежат в одной плоскости, т. е. не параллельны и не пересекаются.</div>
+        </div>
+        <h3>Признак скрещивающихся прямых</h3>
+        <div class="axiom-text" style="background:#ede7f6; border-left-color:#7e57c2;">
+          Если одна прямая лежит в плоскости, а другая пересекает эту плоскость в точке, не принадлежащей первой прямой, то такие прямые скрещиваются.
+        </div>
+        <div class="proof-box">
+          <strong>Доказательство.</strong> Если бы прямые <i>a</i> и <i>b</i> лежали в одной плоскости, то эта плоскость проходила бы через прямую <i>a</i> и точку M и совпадала бы с плоскостью α. Тогда прямая <i>b</i> лежала бы в плоскости α, а она по условию её пересекает. Противоречие.
+        </div>
+        <div class="illustration">
+          <svg width="200" height="130" viewBox="0 0 200 130">
+            <polygon points="20,100 175,100 155,55 0,55" fill="#d9c8ee" stroke="#4527a0" stroke-width="2"/>
+            <line x1="10" y1="35" x2="190" y2="110" stroke="#c62828" stroke-width="3"/>
+            <line x1="60" y1="75" x2="165" y2="75" stroke="#0d47a1" stroke-width="3"/>
+            <circle cx="112" cy="77" r="4.5" fill="#0e2c4b"/>
+            <text x="118" y="72" font-size="15" font-weight="bold" font-style="italic" fill="#0e2c4b">M</text>
+            <text x="80" y="92" font-size="14" font-weight="bold" font-style="italic" fill="#0d47a1">a</text>
+            <text x="172" y="115" font-size="14" font-weight="bold" font-style="italic" fill="#c62828">b</text>
+            <text x="8" y="120" font-size="16" font-weight="bold" fill="#4527a0">α</text>
+          </svg>
+          <span>Прямая a лежит в плоскости α, прямая b пересекает α в точке M ∉ a → a и b скрещиваются.</span>
+        </div>
+      </div>
+      <div class="theory-nav">
+        <button class="nav-btn prev" data-go="t2-7">← Назад</button>
+        <button class="nav-btn next" disabled>Далее →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Практика темы 2 -->
+  <div id="t2-practice" class="subsection">
+    <div class="card card-axioms">
+      <div class="topic-badge badge-purple">🔶 Тема 2 · Практика</div>
+      <h2><span class="num">1</span> Соотнеси утверждение и аксиому/следствие</h2>
+      <p class="task-desc">Нажми на утверждение слева, а затем на соответствующую аксиому или следствие справа.</p>
+      <div class="match-wrap">
+        <div class="match-col" id="p2colLeft"></div>
+        <div class="match-col" id="p2colRight"></div>
+      </div>
+      <div class="feedback" id="p2feedback"></div>
+      <button class="btn btn-purple secondary" onclick="resetP2()">🔄 Начать заново</button>
+    </div>
+
+    <div class="card card-axioms">
+      <div class="topic-badge badge-purple">🔶 Тема 2 · Практика</div>
+      <h2><span class="num">2</span> Заполни пропуски</h2>
+      <p class="task-desc">Впиши пропущенные слова в формулировки аксиом и следствий. Нажми «Проверить».</p>
+      <div id="t2FillBox"></div>
+      <button class="btn btn-purple" onclick="checkT2Fill()">✅ Проверить</button>
+      <button class="btn btn-purple secondary" onclick="resetT2Fill()">🔄 Начать заново</button>
+      <div class="feedback" id="t2FillFeedback"></div>
+    </div>
+
+    <div class="card card-axioms">
+      <div class="topic-badge badge-purple">🔶 Тема 2 · Практика</div>
+      <h2><span class="num">3</span> Верно или неверно?</h2>
+      <p class="task-desc">Прочитай утверждение и выбери «Верно» или «Неверно».</p>
+      <div id="t2tfBox"></div>
+      <div class="feedback" id="t2tfFeedback"></div>
+      <button class="btn btn-purple secondary" onclick="resetT2TF()">🔄 Начать заново</button>
+    </div>
+  </div>
+
+  <!-- Тест темы 2 -->
+  <div id="t2-test" class="subsection">
+    <div class="card card-axioms">
+      <div class="topic-badge badge-purple">🔶 Тема 2 · Тест</div>
+      <h2><span class="num">?</span> Тест по теме «Аксиомы стереометрии»</h2>
+      <p>Ответь на 10 вопросов. После выбора варианта сразу увидишь результат.</p>
+    </div>
+    <div id="t2QuizBox"></div>
+    <div class="result-box result-axioms" id="t2ResultBox">
+      <div class="verdict" id="t2Verdict"></div>
+      <div class="score" id="t2ScoreText">0 / 10</div>
+      <div class="score-msg" id="t2ScoreMsg"></div>
+      <button class="btn" style="background:linear-gradient(135deg,#ffd54f,#ffb300); color:#4e342e;" onclick="restartT2Quiz()">🔄 Пройти заново</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= ИТОГОВЫЙ ТЕСТ ================= -->
+<section id="final" class="section">
+  <div class="card card-green">
+    <div class="topic-badge badge-green">🎓 Итог</div>
+    <h2><span class="num">?</span> Итоговый тест по обеим темам</h2>
+    <p><b>20 вопросов.</b> Ты можешь менять свой выбор до нажатия кнопки «Завершить тест». После завершения будут подсвечены правильные и неправильные ответы, но исправить ответы уже нельзя.</p>
+  </div>
+  <div id="finalQuizBox"></div>
+  <div class="quiz-submit-wrap">
+    <button class="btn-submit-final" id="finalSubmit" onclick="submitFinalQuiz()">✅ Завершить тест</button>
+    <span class="submit-hint" id="finalProgressHint">Отвечено: 0 из 20</span>
+  </div>
+  <div class="result-box result-green" id="finalResultBox">
+    <div class="verdict" id="finalVerdict"></div>
+    <div class="score" id="finalScoreText">0 / 20</div>
+    <div class="score-msg" id="finalScoreMsg"></div>
+    <button class="btn" style="background:linear-gradient(135deg,#ffd54f,#ffb300); color:#4e342e;" onclick="restartFinalQuiz()">🔄 Пройти заново</button>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <p>© <strong>Средняя школа № 4 г. Светлогорска</strong> · Геометрия, 10 класс · Введение в стереометрию</p>
+</footer>
+
+<script>
+/* ================= ГЛАВНАЯ НАВИГАЦИЯ ================= */
+const mainTabs = document.querySelectorAll('.main-tab');
+const sections = document.querySelectorAll('.section');
+mainTabs.forEach(btn => {
+  btn.addEventListener('click', () => {
+    mainTabs.forEach(b => b.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.main).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+/* ================= ПОДВКЛАДКИ ================= */
+const subTabs = document.querySelectorAll('.sub-tab');
+subTabs.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const subId = btn.dataset.sub;
+    const parentSection = btn.closest('.section');
+    parentSection.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+    parentSection.querySelectorAll('.subsection').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    parentSection.querySelector('#' + subId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+/* ================= ТЕОРИЯ ================= */
+function initTheory(topic) {
+  const tocItems = document.querySelectorAll(`#${topic}Toc .toc-item`);
+  const blocks = document.querySelectorAll(`[data-theory-block^="${topic}-"]`);
+  if (tocItems.length === 0 || blocks.length === 0) return;
+  const visited = new Set();
+
+  function showBlock(id) {
+    blocks.forEach(b => b.style.display = 'none');
+    const target = document.querySelector(`[data-theory-block="${id}"]`);
+    if (target) target.style.display = 'block';
+    tocItems.forEach(item => {
+      item.classList.toggle('active', item.dataset.theory === id);
+    });
+    visited.add(id);
+    updateProgress(topic, visited.size, blocks.length);
+    tocItems.forEach(item => {
+      const isVisited = visited.has(item.dataset.theory);
+      const check = item.querySelector('.toc-check');
+      if (isVisited && !check) {
+        const span = document.createElement('span');
+        span.className = 'toc-check';
+        span.textContent = '✓';
+        item.appendChild(span);
+      }
+    });
+  }
+
+  tocItems.forEach(item => {
+    item.addEventListener('click', () => {
+      showBlock(item.dataset.theory);
+      const block = document.querySelector(`[data-theory-block="${item.dataset.theory}"]`);
+      if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  document.querySelectorAll(`[data-go^="${topic}-"]`).forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.go;
+      showBlock(targetId);
+      const block = document.querySelector(`[data-theory-block="${targetId}"]`);
+      if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  const firstToc = tocItems[0];
+  if (firstToc) showBlock(firstToc.dataset.theory);
+}
+
+function updateProgress(topic, visitedCount, totalCount) {
+  const percent = Math.round(visitedCount / totalCount * 100);
+  const fill = document.getElementById(`${topic}Progress`);
+  const text = document.getElementById(`${topic}Percent`);
+  if (fill) fill.style.width = percent + '%';
+  if (text) text.textContent = percent + '%';
+}
+
+initTheory('t1');
+initTheory('t2');
+
+/* ================= УТИЛИТЫ ================= */
+function shuffle(arr) { return arr.slice().sort(() => Math.random() - 0.5); }
+function normalize(str) {
+  return str.trim().toLowerCase()
+    .replace(/ё/g, 'е')
+    .replace(/[.,;:!?]/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+/* ================= ПРАКТИКА 1 (многогранники) ================= */
+const pairsT1 = [
+  { id: 1, left: 'Призма', right: 'Две грани — равные n-угольники, остальные n граней — параллелограммы' },
+  { id: 2, left: 'Прямая призма', right: 'Боковые рёбра перпендикулярны рёбрам основания' },
+  { id: 3, left: 'Правильная призма', right: 'Прямая призма, в основании — правильный многоугольник' },
+  { id: 4, left: 'Параллелепипед', right: 'Четырёхугольная призма, в основании — параллелограмм' },
+  { id: 5, left: 'Прямоугольный параллелепипед', right: 'Прямой параллелепипед с прямоугольником в основании' },
+  { id: 6, left: 'Тетраэдр', right: 'Любая треугольная пирамида' },
+  { id: 7, left: 'Правильный тетраэдр', right: 'Все грани — правильные (равносторонние) треугольники' }
+];
+let p1SelectedLeft = null;
+let p1Matched = 0;
+
+function buildP1() {
+  const colLeft = document.getElementById('p1colLeft');
+  const colRight = document.getElementById('p1colRight');
+  colLeft.innerHTML = ''; colRight.innerHTML = '';
+  p1SelectedLeft = null; p1Matched = 0;
+  document.getElementById('p1feedback').className = 'feedback';
+  shuffle(pairsT1).forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'match-item'; d.textContent = p.left; d.dataset.id = p.id;
+    d.addEventListener('click', () => onP1Left(d));
+    colLeft.appendChild(d);
+  });
+  shuffle(pairsT1).forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'match-item'; d.style.fontSize = '0.85rem';
+    d.textContent = p.right; d.dataset.id = p.id;
+    d.addEventListener('click', () => onP1Right(d));
+    colRight.appendChild(d);
+  });
+}
+function onP1Left(el) {
+  if (el.classList.contains('done')) return;
+  document.querySelectorAll('#p1colLeft .match-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected'); p1SelectedLeft = el;
+}
+function onP1Right(el) {
+  if (el.classList.contains('done')) return;
+  const fb = document.getElementById('p1feedback');
+  if (!p1SelectedLeft) {
+    fb.className = 'feedback show bad';
+    fb.textContent = '⚠️ Сначала выбери многогранник слева!';
+    return;
+  }
+  if (p1SelectedLeft.dataset.id === el.dataset.id) {
+    p1SelectedLeft.classList.remove('selected');
+    p1SelectedLeft.classList.add('done'); el.classList.add('done');
+    p1SelectedLeft = null; p1Matched++;
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Верно! Осталось пар: ' + (pairsT1.length - p1Matched);
+    if (p1Matched === pairsT1.length) fb.textContent = '🎉 Отлично! Все пары найдены!';
+  } else {
+    el.classList.add('wrong'); p1SelectedLeft.classList.add('wrong');
+    fb.className = 'feedback show bad';
+    fb.textContent = '❌ Неверно. Попробуй ещё раз.';
+    const badEl = el, badLeft = p1SelectedLeft;
+    setTimeout(() => { badEl.classList.remove('wrong'); badLeft.classList.remove('wrong'); }, 450);
+  }
+}
+function resetP1() { buildP1(); }
+
+/* ================= ПРАКТИКА 2 (аксиомы) ================= */
+const pairsT2 = [
+  { id: 1, left: 'Через любые три точки, не лежащие на одной прямой, проходит единственная плоскость', right: 'Аксиома A1' },
+  { id: 2, left: 'Если две точки прямой лежат в плоскости, то вся прямая лежит в этой плоскости', right: 'Аксиома A2' },
+  { id: 3, left: 'Если две плоскости имеют общую точку, то они пересекаются по прямой', right: 'Аксиома A3' },
+  { id: 4, left: 'Через прямую и не лежащую на ней точку проходит единственная плоскость', right: 'Следствие а)' },
+  { id: 5, left: 'Через две пересекающиеся прямые проходит единственная плоскость', right: 'Следствие б)' },
+  { id: 6, left: 'Через две параллельные прямые проходит единственная плоскость', right: 'Следствие в)' }
+];
+let p2SelectedLeft = null;
+let p2Matched = 0;
+
+function buildP2() {
+  const colLeft = document.getElementById('p2colLeft');
+  const colRight = document.getElementById('p2colRight');
+  colLeft.innerHTML = ''; colRight.innerHTML = '';
+  p2SelectedLeft = null; p2Matched = 0;
+  document.getElementById('p2feedback').className = 'feedback';
+  shuffle(pairsT2).forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'match-item'; d.textContent = p.left; d.dataset.id = p.id;
+    d.addEventListener('click', () => onP2Left(d));
+    colLeft.appendChild(d);
+  });
+  shuffle(pairsT2).forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'match-item'; d.textContent = p.right; d.dataset.id = p.id;
+    d.addEventListener('click', () => onP2Right(d));
+    colRight.appendChild(d);
+  });
+}
+function onP2Left(el) {
+  if (el.classList.contains('done')) return;
+  document.querySelectorAll('#p2colLeft .match-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected'); p2SelectedLeft = el;
+}
+function onP2Right(el) {
+  if (el.classList.contains('done')) return;
+  const fb = document.getElementById('p2feedback');
+  if (!p2SelectedLeft) {
+    fb.className = 'feedback show bad';
+    fb.textContent = '⚠️ Сначала выбери утверждение слева!';
+    return;
+  }
+  if (p2SelectedLeft.dataset.id === el.dataset.id) {
+    p2SelectedLeft.classList.remove('selected');
+    p2SelectedLeft.classList.add('done'); el.classList.add('done');
+    p2SelectedLeft = null; p2Matched++;
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Верно! Осталось пар: ' + (pairsT2.length - p2Matched);
+    if (p2Matched === pairsT2.length) fb.textContent = '🎉 Отлично! Все пары найдены!';
+  } else {
+    el.classList.add('wrong'); p2SelectedLeft.classList.add('wrong');
+    fb.className = 'feedback show bad';
+    fb.textContent = '❌ Неверно. Попробуй ещё раз.';
+    const badEl = el, badLeft = p2SelectedLeft;
+    setTimeout(() => { badEl.classList.remove('wrong'); badLeft.classList.remove('wrong'); }, 450);
+  }
+}
+function resetP2() { buildP2(); }
+
+/* ================= ЗАПОЛНЕНИЕ ПРОПУСКОВ — ТЕМА 1 ================= */
+const t1FillTasks = [
+  { parts: [
+    { type: 'text', value: 'Многогранник, две грани которого — равные n-угольники, а остальные n граней — параллелограммы, называется ' },
+    { type: 'input', answers: ['призмой', 'призма'], hint: 'М...' },
+    { type: 'text', value: '.' } ] },
+  { parts: [
+    { type: 'text', value: 'Призма, боковые рёбра которой перпендикулярны рёбрам основания, называется ' },
+    { type: 'input', answers: ['прямой', 'прямая'], hint: 'П...' },
+    { type: 'text', value: ' призмой.' } ] },
+  { parts: [
+    { type: 'text', value: 'Прямая призма, в основании которой лежит правильный многоугольник, называется ' },
+    { type: 'input', answers: ['правильной', 'правильная'], hint: 'П...' },
+    { type: 'text', value: ' призмой.' } ] },
+  { parts: [
+    { type: 'text', value: 'Четырёхугольная призма, в основании которой лежит параллелограмм, называется ' },
+    { type: 'input', answers: ['параллелепипедом', 'параллелепипед'], hint: 'П...' },
+    { type: 'text', value: '.' } ] },
+  { parts: [
+    { type: 'text', value: 'Многогранник, у которого одна грань — многоугольник, а остальные грани — треугольники с общей вершиной, называется ' },
+    { type: 'input', answers: ['пирамидой', 'пирамида'], hint: 'П...' },
+    { type: 'text', value: '.' } ] },
+  { parts: [
+    { type: 'text', value: 'Любая треугольная пирамида называется ' },
+    { type: 'input', answers: ['тетраэдром', 'тетраэдр'], hint: 'Т...' },
+    { type: 'text', value: '.' } ] },
+  { parts: [
+    { type: 'text', value: 'Тетраэдр, все грани которого — равносторонние треугольники, называется ' },
+    { type: 'input', answers: ['правильным', 'правильный'], hint: 'П...' },
+    { type: 'text', value: ' тетраэдром.' } ] },
+  { parts: [
+    { type: 'text', value: 'Отрезок, соединяющий две вершины многогранника, не принадлежащие одной грани, называется ' },
+    { type: 'input', answers: ['диагональю', 'диагональ'], hint: 'Д...' },
+    { type: 'text', value: ' многогранника.' } ] }
+];
+
+function buildT1Fill() {
+  const box = document.getElementById('t1FillBox');
+  box.innerHTML = '';
+  document.getElementById('t1FillFeedback').className = 'feedback';
+  t1FillTasks.forEach((task, ti) => {
+    const div = document.createElement('div');
+    div.className = 'fill-task';
+    task.parts.forEach(part => {
+      if (part.type === 'text') div.appendChild(document.createTextNode(part.value));
+      else if (part.type === 'input') {
+        const inp = document.createElement('input');
+        inp.type = 'text'; inp.className = 'fill-input';
+        inp.dataset.taskIndex = ti;
+        inp.placeholder = part.hint || '...';
+        inp.autocomplete = 'off';
+        div.appendChild(inp);
+      }
+    });
+    box.appendChild(div);
+  });
+}
+
+function checkT1Fill() {
+  const inputs = document.querySelectorAll('#t1FillBox .fill-input');
+  let correct = 0, total = 0;
+  inputs.forEach(inp => {
+    const ti = parseInt(inp.dataset.taskIndex);
+    const answers = t1FillTasks[ti].parts.find(p => p.type === 'input').answers;
+    const userVal = normalize(inp.value);
+    inp.classList.remove('correct', 'wrong');
+    inp.disabled = true;
+    total++;
+    if (answers.some(a => normalize(a) === userVal) && userVal !== '') {
+      inp.classList.add('correct'); correct++;
+    } else { inp.classList.add('wrong'); }
+  });
+  const fb = document.getElementById('t1FillFeedback');
+  fb.className = 'feedback show ' + (correct === total ? 'ok' : 'bad');
+  fb.textContent = correct === total
+    ? '🎉 Отлично! Все ' + total + ' пропусков заполнены правильно!'
+    : 'Правильно заполнено ' + correct + ' из ' + total + '. Правильные ответы выделены зелёным, ошибки — красным.';
+}
+function resetT1Fill() { buildT1Fill(); document.getElementById('t1FillFeedback').className = 'feedback'; }
+
+/* ================= ЗАПОЛНЕНИЕ ПРОПУСКОВ — ТЕМА 2 ================= */
+const t2FillTasks = [
+  { parts: [
+    { type: 'text', value: 'Через любые три точки, не лежащие на одной прямой, проходит ' },
+    { type: 'input', answers: ['плоскость', 'одна плоскость', 'единственная плоскость'], hint: 'П...' },
+    { type: 'text', value: ', и притом только одна.' } ] },
+  { parts: [
+    { type: 'text', value: 'Если две точки прямой лежат в ' },
+    { type: 'input', answers: ['плоскости'], hint: 'П...' },
+    { type: 'text', value: ', то все точки этой прямой лежат в ней же.' } ] },
+  { parts: [
+    { type: 'text', value: 'Если две плоскости имеют общую точку, то они имеют общую ' },
+    { type: 'input', answers: ['прямую', 'линию', 'линию пересечения'], hint: 'П...' },
+    { type: 'text', value: ', на которой лежат все общие точки.' } ] },
+  { parts: [
+    { type: 'text', value: 'Через прямую и не лежащую на ней точку проходит ' },
+    { type: 'input', answers: ['плоскость', 'одна плоскость', 'единственная плоскость'], hint: 'П...' },
+    { type: 'text', value: ', и притом только одна. (Следствие а)' } ] },
+  { parts: [
+    { type: 'text', value: 'Через две пересекающиеся прямые проходит ' },
+    { type: 'input', answers: ['плоскость', 'одна плоскость', 'единственная плоскость'], hint: 'П...' },
+    { type: 'text', value: ', и притом только одна. (Следствие б)' } ] },
+  { parts: [
+    { type: 'text', value: 'Через две параллельные прямые проходит ' },
+    { type: 'input', answers: ['плоскость', 'одна плоскость', 'единственная плоскость'], hint: 'П...' },
+    { type: 'text', value: ', и притом только одна. (Следствие в)' } ] },
+  { parts: [
+    { type: 'text', value: 'Две прямые называются ' },
+    { type: 'input', answers: ['скрещивающимися', 'скрещивающиеся'], hint: 'С...' },
+    { type: 'text', value: ', если они не лежат в одной плоскости.' } ] },
+  { parts: [
+    { type: 'text', value: 'Если одна прямая лежит в плоскости, а другая пересекает эту плоскость в точке, не принадлежащей первой прямой, то такие прямые ' },
+    { type: 'input', answers: ['скрещиваются', 'скрещивающиеся'], hint: 'С...' },
+    { type: 'text', value: '.' } ] }
+];
+
+function buildT2Fill() {
+  const box = document.getElementById('t2FillBox');
+  box.innerHTML = '';
+  document.getElementById('t2FillFeedback').className = 'feedback';
+  t2FillTasks.forEach((task, ti) => {
+    const div = document.createElement('div');
+    div.className = 'fill-task';
+    div.style.borderLeftColor = '#7e57c2';
+    task.parts.forEach(part => {
+      if (part.type === 'text') div.appendChild(document.createTextNode(part.value));
+      else if (part.type === 'input') {
+        const inp = document.createElement('input');
+        inp.type = 'text'; inp.className = 'fill-input';
+        inp.dataset.taskIndex = ti;
+        inp.placeholder = part.hint || '...';
+        inp.autocomplete = 'off';
+        div.appendChild(inp);
+      }
+    });
+    box.appendChild(div);
+  });
+}
+
+function checkT2Fill() {
+  const inputs = document.querySelectorAll('#t2FillBox .fill-input');
+  let correct = 0, total = 0;
+  inputs.forEach(inp => {
+    const ti = parseInt(inp.dataset.taskIndex);
+    const answers = t2FillTasks[ti].parts.find(p => p.type === 'input').answers;
+    const userVal = normalize(inp.value);
+    inp.classList.remove('correct', 'wrong');
+    inp.disabled = true;
+    total++;
+    if (answers.some(a => normalize(a) === userVal) && userVal !== '') {
+      inp.classList.add('correct'); correct++;
+    } else { inp.classList.add('wrong'); }
+  });
+  const fb = document.getElementById('t2FillFeedback');
+  fb.className = 'feedback show ' + (correct === total ? 'ok' : 'bad');
+  fb.textContent = correct === total
+    ? '🎉 Отлично! Все ' + total + ' пропусков заполнены правильно!'
+    : 'Правильно заполнено ' + correct + ' из ' + total + '. Правильные ответы выделены зелёным, ошибки — красным.';
+}
+function resetT2Fill() { buildT2Fill(); document.getElementById('t2FillFeedback').className = 'feedback'; }
+
+/* ================= ВЕРНО/НЕВЕРНО — ТЕМА 1 ================= */
+const t1tfTasks = [
+  { text: 'Призма — это многогранник, две грани которого — равные многоугольники, а остальные — параллелограммы.', answer: true },
+  { text: 'Прямая призма — это призма, у которой в основании лежит правильный многоугольник.', answer: false, explain: 'Это определение правильной призмы. Прямая призма — боковые рёбра перпендикулярны основанию.' },
+  { text: 'Параллелепипед — это четырёхугольная призма, в основании которой лежит параллелограмм.', answer: true },
+  { text: 'Прямоугольный параллелепипед — это прямой параллелепипед с прямоугольником в основании.', answer: true },
+  { text: 'Любая четырёхугольная призма является параллелепипедом.', answer: false, explain: 'В основании 4-угольной призмы может лежать произвольный четырёхугольник, не параллелограмм.' },
+  { text: 'Тетраэдр — это любая треугольная пирамида.', answer: true },
+  { text: 'Правильный тетраэдр — это тетраэдр, все грани которого — равносторонние треугольники.', answer: true },
+  { text: 'У треугольной призмы есть диагонали.', answer: false, explain: 'У треугольной призмы диагоналей нет.' }
+];
+
+function buildT1TF() {
+  const box = document.getElementById('t1tfBox');
+  box.innerHTML = '';
+  document.getElementById('t1tfFeedback').className = 'feedback';
+  t1tfTasks.forEach((t, i) => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'padding:12px 0; border-bottom:1px solid #e8eef4;';
+    wrap.innerHTML = `<div style="font-weight:600; margin-bottom:10px; line-height:1.45; font-size:0.95rem;">${i+1}. ${t.text}</div>`;
+    const btnRow = document.createElement('div');
+    btnRow.style.cssText = 'display:flex; gap:10px; flex-wrap:wrap;';
+    const bTrue = document.createElement('button');
+    bTrue.className = 'btn';
+    bTrue.style.cssText = 'margin:0; padding:10px 20px; font-size:0.9rem; flex:1 1 0; min-width:130px;';
+    bTrue.textContent = '✔ Верно';
+    const bFalse = document.createElement('button');
+    bFalse.className = 'btn secondary';
+    bFalse.style.cssText = 'margin:0; padding:10px 20px; font-size:0.9rem; flex:1 1 0; min-width:130px;';
+    bFalse.textContent = '✘ Неверно';
+    const fb = document.getElementById('t1tfFeedback');
+    function check(chosen, btn) {
+      if (wrap.dataset.done) return;
+      wrap.dataset.done = '1';
+      const ok = (chosen === t.answer);
+      if (ok) {
+        btn.style.background = 'linear-gradient(135deg,#43a047,#1b5e20)';
+        btn.style.color = '#fff'; btn.style.borderColor = '#43a047';
+        fb.className = 'feedback show ok'; fb.textContent = '✅ Верно!';
+      } else {
+        btn.style.background = '#ffebee'; btn.style.color = '#b71c1c'; btn.style.borderColor = '#e53935';
+        fb.className = 'feedback show bad';
+        fb.textContent = '❌ Неверно. ' + (t.explain || ('Правильный ответ: ' + (t.answer ? 'Верно' : 'Неверно')));
+      }
+      bTrue.disabled = true; bFalse.disabled = true;
+      bTrue.style.cursor = 'default'; bFalse.style.cursor = 'default';
+    }
+    bTrue.addEventListener('click', () => check(true, bTrue));
+    bFalse.addEventListener('click', () => check(false, bFalse));
+    btnRow.appendChild(bTrue); btnRow.appendChild(bFalse);
+    wrap.appendChild(btnRow); box.appendChild(wrap);
+  });
+}
+function resetT1TF() { buildT1TF(); }
+
+/* ================= ВЕРНО/НЕВЕРНО — ТЕМА 2 ================= */
+const t2tfTasks = [
+  { text: 'Через три точки, лежащие на одной прямой, проходит единственная плоскость.', answer: false, explain: 'Через такие точки проходит бесконечно много плоскостей.' },
+  { text: 'Если две точки прямой лежат в плоскости, то вся прямая лежит в этой плоскости.', answer: true },
+  { text: 'Две различные плоскости могут пересекаться по точке.', answer: false, explain: 'Если плоскости имеют общую точку, они пересекаются по прямой.' },
+  { text: 'Через прямую и не лежащую на ней точку проходит единственная плоскость.', answer: true },
+  { text: 'Через две параллельные прямые нельзя провести плоскость.', answer: false, explain: 'Можно, и притом только одну (следствие в).' },
+  { text: 'Плоскость — основное неопределяемое понятие стереометрии.', answer: true },
+  { text: 'Две точки задают единственную плоскость.', answer: false, explain: 'Две точки задают только прямую.' },
+  { text: 'Скрещивающиеся прямые — это прямые, которые не лежат в одной плоскости.', answer: true }
+];
+
+function buildT2TF() {
+  const box = document.getElementById('t2tfBox');
+  box.innerHTML = '';
+  document.getElementById('t2tfFeedback').className = 'feedback';
+  t2tfTasks.forEach((t, i) => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'padding:12px 0; border-bottom:1px solid #e8eef4;';
+    wrap.innerHTML = `<div style="font-weight:600; margin-bottom:10px; line-height:1.45; font-size:0.95rem;">${i+1}. ${t.text}</div>`;
+    const btnRow = document.createElement('div');
+    btnRow.style.cssText = 'display:flex; gap:10px; flex-wrap:wrap;';
+    const bTrue = document.createElement('button');
+    bTrue.className = 'btn btn-purple';
+    bTrue.style.cssText = 'margin:0; padding:10px 20px; font-size:0.9rem; flex:1 1 0; min-width:130px;';
+    bTrue.textContent = '✔ Верно';
+    const bFalse = document.createElement('button');
+    bFalse.className = 'btn btn-purple secondary';
+    bFalse.style.cssText = 'margin:0; padding:10px 20px; font-size:0.9rem; flex:1 1 0; min-width:130px;';
+    bFalse.textContent = '✘ Неверно';
+    const fb = document.getElementById('t2tfFeedback');
+    function check(chosen, btn) {
+      if (wrap.dataset.done) return;
+      wrap.dataset.done = '1';
+      const ok = (chosen === t.answer);
+      if (ok) {
+        btn.style.background = 'linear-gradient(135deg,#43a047,#1b5e20)';
+        btn.style.color = '#fff'; btn.style.borderColor = '#43a047';
+        fb.className = 'feedback show ok'; fb.textContent = '✅ Верно!';
+      } else {
+        btn.style.background = '#ffebee'; btn.style.color = '#b71c1c'; btn.style.borderColor = '#e53935';
+        fb.className = 'feedback show bad';
+        fb.textContent = '❌ Неверно. ' + (t.explain || ('Правильный ответ: ' + (t.answer ? 'Верно' : 'Неверно')));
+      }
+      bTrue.disabled = true; bFalse.disabled = true;
+      bTrue.style.cursor = 'default'; bFalse.style.cursor = 'default';
+    }
+    bTrue.addEventListener('click', () => check(true, bTrue));
+    bFalse.addEventListener('click', () => check(false, bFalse));
+    btnRow.appendChild(bTrue); btnRow.appendChild(bFalse);
+    wrap.appendChild(btnRow); box.appendChild(wrap);
+  });
+}
+function resetT2TF() { buildT2TF(); }
+
+/* ================= ОБЩИЙ ГЕНЕРАТОР ТЕСТА (с подсветкой) ================= */
+function buildQuizUniversal(containerId, quizData, extraClass, resultBoxId, scoreId, verdictId, msgId) {
+  const box = document.getElementById(containerId);
+  box.innerHTML = '';
+  let answered = 0;
+  let correctCount = 0;
+  const userAnswers = new Array(quizData.length).fill(null);
+  const resultBox = document.getElementById(resultBoxId);
+  if (resultBox) resultBox.classList.remove('show');
+
+  quizData.forEach((item, qi) => {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question' + (extraClass ? ' ' + extraClass : '');
+    const letters = ['А', 'Б', 'В', 'Г'];
+    qDiv.innerHTML = `<div class="q-text"><span class="q-num">${qi+1}</span>${item.q}</div>`;
+    const opts = document.createElement('div');
+    opts.className = 'options';
+
+    item.options.forEach((opt, oi) => {
+      const o = document.createElement('div');
+      o.className = 'option';
+      o.innerHTML = `<span class="mark">${letters[oi]}</span><span>${opt}</span>`;
+      o.addEventListener('click', () => {
+        if (userAnswers[qi] !== null) return;
+        userAnswers[qi] = oi;
+        const allOpts = opts.querySelectorAll('.option');
+        allOpts.forEach((el, idx) => {
+          el.classList.add('locked');
+          if (idx === item.correct) {
+            el.classList.add('correct');
+            el.querySelector('.mark').textContent = '✓';
+          }
+          if (idx === oi && oi !== item.correct) {
+            el.classList.add('wrong');
+            el.querySelector('.mark').textContent = '✗';
+          }
+        });
+        answered++;
+        if (oi === item.correct) correctCount++;
+        if (answered === quizData.length) {
+          showQuizResult(correctCount, quizData.length, resultBoxId, scoreId, verdictId, msgId);
+        }
+      });
+      opts.appendChild(o);
+    });
+    qDiv.appendChild(opts);
+    box.appendChild(qDiv);
+  });
+}
+
+function showQuizResult(correctCount, total, resultBoxId, scoreId, verdictId, msgId) {
+  const rb = document.getElementById(resultBoxId);
+  const scoreText = document.getElementById(scoreId);
+  const verdict = document.getElementById(verdictId);
+  const msg = document.getElementById(msgId);
+  scoreText.textContent = correctCount + ' / ' + total;
+  const percent = Math.round(correctCount / total * 100);
+  let v, m;
+  if (percent === 100)      { v = '🏆 Отлично!';        m = 'Ты прекрасно знаешь эту тему!'; }
+  else if (percent >= 80)   { v = '😃 Молодец!';        m = 'Хороший результат! Осталось совсем немного до идеала.'; }
+  else if (percent >= 60)   { v = '🙂 Неплохо!';        m = 'Есть небольшие пробелы. Повтори теорию.'; }
+  else                      { v = '📖 Стоит повторить'; m = 'Вернись к теории и попробуй снова.'; }
+  verdict.textContent = v;
+  msg.textContent = m + ' (' + percent + '%)';
+  rb.classList.add('show');
+  rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/* ================= ТЕСТ ТЕМЫ 1 (10 вопросов) ================= */
+const t1QuizData = [
+  { q: 'Какое понятие НЕ относится к многогранникам?',
+    options: ['Призма', 'Пирамида', 'Параллелепипед', 'Окружность'], correct: 3 },
+  { q: 'Сколько граней у n-угольной призмы?',
+    options: ['n', 'n + 1', 'n + 2', '2n'], correct: 2 },
+  { q: 'Сколько рёбер у n-угольной призмы?',
+    options: ['n', '2n', '3n', '4n'], correct: 2 },
+  { q: 'Что лежит в основании правильной четырёхугольной призмы?',
+    options: ['Прямоугольник', 'Ромб', 'Квадрат', 'Трапеция'], correct: 2 },
+  { q: 'Как по-другому называется треугольная пирамида?',
+    options: ['Призмой', 'Тетраэдром', 'Параллелепипедом', 'Октаэдром'], correct: 1 },
+  { q: 'Любая ли четырёхугольная призма является параллелепипедом?',
+    options: ['Да, всегда', 'Нет, только если в основании параллелограмм',
+      'Да, если она прямая', 'Нет, никогда'], correct: 1 },
+  { q: 'У какой призмы нет диагоналей?',
+    options: ['У четырёхугольной', 'У треугольной', 'У шестиугольной', 'У пятиугольной'], correct: 1 },
+  { q: 'Сколько видов параллелепипедов?',
+    options: ['Один', 'Два', 'Три', 'Четыре'], correct: 2 },
+  { q: 'Правильный тетраэдр — это тетраэдр, у которого:',
+    options: ['Все рёбра равны', 'Все грани — равносторонние треугольники',
+      'Обе версии верны', 'Ничего из перечисленного'], correct: 2 },
+  { q: 'Чему равна сумма плоских углов при вершине правильной треугольной пирамиды (тетраэдра)?',
+    options: ['90°', '180°', '240°', '360°'], correct: 1 }
+];
+
+function buildT1Quiz() {
+  buildQuizUniversal('t1QuizBox', t1QuizData, '', 't1ResultBox', 't1ScoreText', 't1Verdict', 't1ScoreMsg');
+}
+function restartT1Quiz() { buildT1Quiz(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+/* ================= ТЕСТ ТЕМЫ 2 (10 вопросов) ================= */
+const t2QuizData = [
+  { q: 'Какое понятие НЕ является основным неопределяемым в стереометрии?',
+    options: ['Точка', 'Прямая', 'Плоскость', 'Отрезок'], correct: 3 },
+  { q: 'Через любые три точки, не лежащие на одной прямой, проходит:',
+    options: ['Ни одной плоскости', 'Одна плоскость', 'Две плоскости', 'Бесконечно много плоскостей'], correct: 1 },
+  { q: 'Сколько общих прямых имеют две различные плоскости, если они имеют общую точку?',
+    options: ['Одну', 'Две', 'Бесконечно много', 'Ни одной'], correct: 0 },
+  { q: 'Если две точки прямой лежат в плоскости, то:',
+    options: ['только эти две точки лежат в плоскости', 'вся прямая лежит в этой плоскости',
+      'прямая пересекает плоскость в одной точке', 'прямая параллельна плоскости'], correct: 1 },
+  { q: 'Сколько плоскостей можно провести через три точки, лежащие на одной прямой?',
+    options: ['Ни одной', 'Одну', 'Две', 'Бесконечно много'], correct: 3 },
+  { q: 'Сколько плоскостей можно провести через 2 точки?',
+    options: ['Ни одной', 'Одну', 'Две', 'Бесконечно много'], correct: 3 },
+  { q: 'Какое утверждение соответствует аксиоме A3?',
+    options: ['Через три точки проходит единственная плоскость',
+      'Если две точки прямой лежат в плоскости, то вся прямая лежит в ней',
+      'Если две плоскости имеют общую точку, они пересекаются по прямой',
+      'Через прямую и точку проходит плоскость'], correct: 2 },
+  { q: 'Следствие а) утверждает, что через прямую и не лежащую на ней точку можно провести:',
+    options: ['Ни одной плоскости', 'Одну плоскость', 'Две плоскости', 'Бесконечно много'], correct: 1 },
+  { q: 'Если одна прямая лежит в плоскости, а другая пересекает эту плоскость в точке, не лежащей на первой прямой, то прямые:',
+    options: ['Параллельны', 'Пересекаются', 'Скрещиваются', 'Совпадают'], correct: 2 },
+  { q: 'Сколько способов задания плоскости вы знаете?',
+    options: ['Один', 'Два', 'Три', 'Четыре'], correct: 3 }
+];
+
+function buildT2Quiz() {
+  buildQuizUniversal('t2QuizBox', t2QuizData, 'q-axioms', 't2ResultBox', 't2ScoreText', 't2Verdict', 't2ScoreMsg');
+}
+function restartT2Quiz() { buildT2Quiz(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+/* ================= ИТОГОВЫЙ ТЕСТ (20 вопросов) ================= */
+const finalQuizData = [
+  // Тема 1 (10 вопросов)
+  { q: 'Призма — это многогранник, у которого:',
+    options: ['Две грани — равные n-угольники, а остальные — параллелограммы',
+      'Одна грань — многоугольник, остальные — треугольники',
+      'Все грани — квадраты', 'Все рёбра равны'], correct: 0 },
+  { q: 'Сколько граней у n-угольной призмы?',
+    options: ['n', 'n + 1', 'n + 2', '2n'], correct: 2 },
+  { q: 'Правильная призма — это:',
+    options: ['Любая призма', 'Прямая призма с правильным многоугольником в основании',
+      'Призма с квадратом в основании', 'Наклонная призма'], correct: 1 },
+  { q: 'Что лежит в основании правильной четырёхугольной призмы?',
+    options: ['Прямоугольник', 'Ромб', 'Квадрат', 'Трапеция'], correct: 2 },
+  { q: 'У какой призмы нет диагоналей?',
+    options: ['У четырёхугольной', 'У треугольной', 'У шестиугольной', 'У пятиугольной'], correct: 1 },
+  { q: 'Тетраэдр — это:',
+    options: ['Четырёхугольная пирамида', 'Любая треугольная пирамида',
+      'Куб', 'Прямая призма'], correct: 1 },
+  { q: 'Правильный тетраэдр — это тетраэдр, у которого:',
+    options: ['Все рёбра равны', 'Все грани — равносторонние треугольники',
+      'Обе версии верны', 'Ничего из перечисленного'], correct: 2 },
+  { q: 'Сколько рёбер у n-угольной призмы?',
+    options: ['n', '2n', '3n', '4n'], correct: 2 },
+  { q: 'Прямоугольный параллелепипед — это:',
+    options: ['Прямой параллелепипед с прямоугольником в основании',
+      'Наклонный параллелепипед',
+      'Правильная четырёхугольная призма',
+      'Любая четырёхугольная призма'], correct: 0 },
+  { q: 'Диагональ многогранника — это:',
+    options: ['Отрезок, соединяющий любые две вершины',
+      'Отрезок, соединяющий две вершины, не принадлежащие одной грани',
+      'Ребро многогранника',
+      'Линия пересечения граней'], correct: 1 },
+  // Тема 2 (10 вопросов)
+  { q: 'Через любые три точки, не лежащие на одной прямой, проходит:',
+    options: ['Ни одной плоскости', 'Одна плоскость', 'Две плоскости', 'Бесконечно много плоскостей'], correct: 1 },
+  { q: 'Если две точки прямой лежат в плоскости, то:',
+    options: ['только эти две точки лежат в плоскости', 'вся прямая лежит в этой плоскости',
+      'прямая пересекает плоскость в одной точке', 'прямая параллельна плоскости'], correct: 1 },
+  { q: 'Сколько общих прямых имеют две различные плоскости, имеющие общую точку?',
+    options: ['Одну', 'Две', 'Бесконечно много', 'Ни одной'], correct: 0 },
+  { q: 'Сколько плоскостей можно провести через три точки на одной прямой?',
+    options: ['Ни одной', 'Одну', 'Две', 'Бесконечно много'], correct: 3 },
+  { q: 'Следствие б) утверждает, что через две пересекающиеся прямые можно провести:',
+    options: ['Ни одной плоскости', 'Одну плоскость', 'Две плоскости', 'Бесконечно много'], correct: 1 },
+  { q: 'Через две параллельные прямые проходит:',
+    options: ['Ни одной плоскости', 'Одна плоскость', 'Две плоскости', 'Бесконечно много'], correct: 1 },
+  { q: 'Скрещивающиеся прямые — это прямые, которые:',
+    options: ['Параллельны', 'Пересекаются', 'Не лежат в одной плоскости', 'Совпадают'], correct: 2 },
+  { q: 'Сколько существует способов задания плоскости?',
+    options: ['Один', 'Два', 'Три', 'Четыре'], correct: 3 },
+  { q: 'Сколько плоскостей можно провести через две точки?',
+    options: ['Ни одной', 'Одну', 'Две', 'Бесконечно много'], correct: 3 },
+  { q: 'Признак скрещивающихся прямых гласит:',
+    options: ['Если две прямые параллельны, они скрещиваются',
+      'Если одна прямая лежит в плоскости, а другая пересекает эту плоскость в точке, не принадлежащей первой прямой, то прямые скрещиваются',
+      'Если прямые пересекаются, они скрещиваются',
+      'Если прямые не лежат в одной плоскости, они параллельны'], correct: 1 }
+];
+
+let finalSubmitted = false;
+
+function buildFinalQuiz() {
+  finalSubmitted = false;
+  const box = document.getElementById('finalQuizBox');
+  box.innerHTML = '';
+  document.getElementById('finalResultBox').classList.remove('show');
+  const submitBtn = document.getElementById('finalSubmit');
+  submitBtn.disabled = false;
+  submitBtn.textContent = '✅ Завершить тест';
+  updateFinalProgressHint();
+
+  const userSelections = new Array(finalQuizData.length).fill(null);
+  window._finalSelections = userSelections;
+
+  finalQuizData.forEach((item, qi) => {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question';
+    const letters = ['А', 'Б', 'В', 'Г'];
+    qDiv.innerHTML = `<div class="q-text"><span class="q-num">${qi+1}</span>${item.q}</div>`;
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    qDiv.dataset.qindex = qi;
+
+    item.options.forEach((opt, oi) => {
+      const o = document.createElement('div');
+      o.className = 'option';
+      o.dataset.optIndex = oi;
+      o.innerHTML = `<span class="mark">${letters[oi]}</span><span>${opt}</span>`;
+      o.addEventListener('click', () => {
+        if (finalSubmitted) return;
+        window._finalSelections[qi] = oi;
+        const allOpts = opts.querySelectorAll('.option');
+        allOpts.forEach((el, idx) => {
+          el.classList.toggle('chosen', idx === oi);
+          const mark = el.querySelector('.mark');
+          mark.textContent = (idx === oi) ? '●' : letters[idx];
+        });
+        updateFinalProgressHint(window._finalSelections);
+      });
+      opts.appendChild(o);
+    });
+    qDiv.appendChild(opts);
+    box.appendChild(qDiv);
+  });
+}
+
+function updateFinalProgressHint(selections) {
+  const hint = document.getElementById('finalProgressHint');
+  if (!hint) return;
+  const arr = selections || window._finalSelections || [];
+  const answered = arr.filter(x => x !== null).length;
+  hint.textContent = 'Отвечено: ' + answered + ' из ' + finalQuizData.length;
+}
+
+function submitFinalQuiz() {
+  if (finalSubmitted) return;
+  const selections = window._finalSelections || [];
+  const answered = selections.filter(x => x !== null).length;
+  if (answered < finalQuizData.length) {
+    if (!confirm('Ты ответил не на все вопросы (' + answered + ' из ' + finalQuizData.length + '). Завершить тест?')) {
+      return;
+    }
+  }
+  finalSubmitted = true;
+
+  let correct = 0;
+  const letters = ['А', 'Б', 'В', 'Г'];
+
+  // Подсветка правильных/неправильных ответов во всех вопросах
+  document.querySelectorAll('#finalQuizBox .question').forEach(qDiv => {
+    const qi = parseInt(qDiv.dataset.qindex);
+    const item = finalQuizData[qi];
+    const chosenIdx = selections[qi];
+    if (chosenIdx === item.correct) correct++;
+
+    const allOpts = qDiv.querySelectorAll('.option');
+    allOpts.forEach(o => {
+      const oi = parseInt(o.dataset.optIndex);
+      o.style.pointerEvents = 'none';
+      o.classList.remove('chosen');
+      const mark = o.querySelector('.mark');
+
+      if (oi === item.correct) {
+        // Правильный ответ — всегда зелёный с ✓
+        o.classList.add('correct');
+        mark.textContent = '✓';
+      } else if (oi === chosenIdx) {
+        // Неправильно выбранный ответ — красный с ✗
+        o.classList.add('wrong');
+        mark.textContent = '✗';
+      } else {
+        // Остальные варианты — приглушить
+        o.style.opacity = '0.6';
+        mark.textContent = letters[oi];
+      }
+    });
+  });
+
+  // Блокируем кнопку завершения
+  const submitBtn = document.getElementById('finalSubmit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '✔️ Тест завершён';
+  document.getElementById('finalProgressHint').textContent = 'Тест завершён. Результат ниже.';
+
+  // Показываем результат
+  const rb = document.getElementById('finalResultBox');
+  const scoreText = document.getElementById('finalScoreText');
+  const verdict = document.getElementById('finalVerdict');
+  const msg = document.getElementById('finalScoreMsg');
+  scoreText.textContent = correct + ' / ' + finalQuizData.length;
+  const percent = Math.round(correct / finalQuizData.length * 100);
+  let v, m;
+  if (percent === 100)      { v = '🏆 Великолепно!';   m = 'Ты прекрасно усвоил обе темы!'; }
+  else if (percent >= 85)   { v = '😃 Отлично!';       m = 'Очень хороший результат!'; }
+  else if (percent >= 70)   { v = '🙂 Хорошо!';         m = 'Неплохо, но есть над чем поработать.'; }
+  else if (percent >= 50)   { v = '📖 Удовлетворительно'; m = 'Стоит повторить обе темы.'; }
+  else                      { v = '⚠️ Нужно повторить';  m = 'Вернись к теории и попробуй снова.'; }
+  verdict.textContent = v;
+  msg.textContent = m + ' (' + percent + '%)';
+  rb.classList.add('show');
+  rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function restartFinalQuiz() {
+  buildFinalQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ================= ИНИЦИАЛИЗАЦИЯ ================= */
+buildP1();
+buildT1Fill();
+buildT1TF();
+buildP2();
+buildT2Fill();
+buildT2TF();
+buildT1Quiz();
+buildT2Quiz();
+buildFinalQuiz();
+</script>
+
+</body>
+</html>
